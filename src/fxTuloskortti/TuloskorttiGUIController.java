@@ -59,7 +59,6 @@ public class TuloskorttiGUIController implements Initializable{
      * Käsittelee lopetuskäskyn
      */
     @FXML private void handleLopeta()   {
-        tallenna();
         Platform.exit();
     }
     

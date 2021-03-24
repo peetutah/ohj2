@@ -55,6 +55,8 @@ public class UusiGUIController implements ModalControllerInterface<String>{
         Dialogs.showMessageDialog("ei voi vielä lisätä");
     }
     
+    //TODO väylien poistaminen jos vahingossa lisätty radalle liikaa
+    
     private void tallenna() {
         Dialogs.showMessageDialog("Ei toimi, mutta tallenetaan");
     }
