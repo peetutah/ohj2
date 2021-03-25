@@ -1,10 +1,12 @@
 package fxTuloskortti;
 	
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage; 
+import javafx.stage.Stage;
+import tuloskortti.Tuloskortti; 
 
 
 /**
@@ -19,11 +21,12 @@ public class TuloskorttiMain extends Application {
     @Override
 	public void start(Stage primaryStage) {
 		try {
-		    FXMLLoader ldr = new FXMLLoader(getClass().getResource("TuloskorttiGUIView.fxml"));
+		    final FXMLLoader ldr = new FXMLLoader(getClass().getResource("TuloskorttiGUIView.fxml"));
 		    final Pane root = (Pane)ldr.load();
 		    final TuloskorttiGUIController tuloskorttiCtrl = (TuloskorttiGUIController)ldr.getController();
 		    
 		    final Scene scene = new Scene(root);
+		    
 			scene.getStylesheets().add(getClass().getResource("tuloskortti.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Tuloskortti");
@@ -34,7 +37,13 @@ public class TuloskorttiMain extends Application {
 			    //kutsutaan sulkuLupa-metodia
 			    if( !tuloskorttiCtrl.sulkuLupa() ) event.consume();
 			});
+
+	        Tuloskortti tuloskortti = new Tuloskortti();
+	        tuloskorttiCtrl.setTuloskortti(tuloskortti);
+			
 			primaryStage.show();
+			if ( !tuloskorttiCtrl.avaa()) Platform.exit();
+			
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

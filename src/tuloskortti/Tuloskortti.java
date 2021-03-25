@@ -14,6 +14,15 @@ import java.util.Scanner;
  *
  */
 public class Tuloskortti {
+    
+    private Rata rata = new Rata(); 
+    
+    /**
+     * tyhjä konstruktori
+     */
+    public Tuloskortti() {
+        
+    }
 
     /**Parsii tekstirivin taulukkoon erotinmerkkien kohdalta, poistaa kaikki ylimääräiset whitespacet
      * @param jono mikä pätkitään
@@ -74,13 +83,52 @@ public class Tuloskortti {
         }
     }
     
+    
+    /** laskee ratojen maaran nimitiedoista aliohjelmalla
+     * @return ratojen maara
+     */
+    public int rataMaara() {
+        return rata.annaRataMaara();
+    }
+    
+    
+    /** kutsuu rataoliota hakemaan radan id:n phjalta
+     * @param id pillä haetaan
+     * @return id:stä kasattu rata
+     */
+    public String[] annaRata(int id) {
+        return rata.kasaaRata(id);
+    }
+
+    
+    /** lisää uuden radan tietoihin, luo sen annettujen tietojen pohjalta
+     * @param ratatiedot taulukko minkä pohjalta uusi rata luodaan
+     */
+    public void uusiRata(String[] ratatiedot) {
+        rata.lisaaRata(ratatiedot);        
+    }
+    
+    
+    /** hakee uusimman radan id:n
+     * @return palauttaa viimeisen rekisteröidyn rataid:n
+     */
+    public int annaRataId() {
+        return rata.getId();
+    }
+    
+    /**
+     *  kutsuu rataa lisäämään perusradan
+     */
+    public void lisaaPerus() {
+        rata.perusRata();
+    }
+    
     /** testis
      * @param args ei kay
-     
+     */
     public static void main(String[] args) {
         Tuloskortti ok = new Tuloskortti();
         ok.tiedostoLuku("nimikoe.txt");
         ok.tiedostoLuku("parkoe.txt");
     }
-    */
 }

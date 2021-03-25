@@ -5,12 +5,12 @@ package tuloskortti;
  * @version 21.3.2021
  *
  */
-public class Nimet extends Rata {
+public class Nimet{
     
-    private String tiedosto = "nimikoe.txt"; //TODO vaihto oikeaan
-    
+
+    private static final int maxNimia = 5; 
     private int lkm;
-    private static final int maxNimia = 36; // riittää kahteen täyteen rataan
+    private String tiedosto = ""; //TODO vaihto oikeaan
     private Nimi alkiot[] = new Nimi[maxNimia];
     
     
@@ -20,13 +20,30 @@ public class Nimet extends Rata {
     public Nimet(){
     // attribuutit alustuu luokkaa luodessa
     }
+    
+    
+    @Override 
+    public Nimet clone(){
+        
+        Nimet klooni = new Nimet();
+        klooni.lkm = this.getlkm();
+        klooni.alkiot = new Nimi[this.lkm + 2];
+        
+        for (int i = 0; i < this.alkiot.length; i++) {
+            klooni.alkiot[i] = this.alkiot[i];
+        }
+        return klooni;
+        
+    }
 
     
     /** lisää uuden nimen tietoihin
      * @param n uusi nimi
      */
     public void lisaa(Nimi n){
-        if(lkm >= alkiot.length) System.err.println("Liikaa alkioita!");
+        if(lkm >= alkiot.length) {
+           this.alkiot = this.clone().alkiot;
+        }
         alkiot[lkm] = n;
         lkm++;
     }
@@ -44,10 +61,11 @@ public class Nimet extends Rata {
      * @return palauttaa paikassa olevan nimen
      * @throws IndexOutOfBoundsException jos yli taulukon rajoista
      */
-    public Nimi getNimi(int paikka) throws IndexOutOfBoundsException {
+    public Nimi anna(int paikka) throws IndexOutOfBoundsException {
             if ( paikka < 0 || lkm <= paikka ) throw new IndexOutOfBoundsException("Indeksi ulkona taulukosta:" + paikka);
             return this.alkiot [paikka];
     }
+    
     
     /** hakee nimen alkioista id:n perusteella
      * @param id Rataid minkä pohjalta etsitään
@@ -56,7 +74,7 @@ public class Nimet extends Rata {
      */
     public Nimi etsiNimi(int id) throws NullPointerException {
         for (int i = 0; i < this.getlkm(); i++) {
-            if( getNimi(i).getRataId() == id) return getNimi(i);
+            if( anna(i).getRataId() == id) return anna(i);
         }
         return null;
     }
@@ -64,16 +82,18 @@ public class Nimet extends Rata {
 
     /** tallennus nimelle, kutsuu yläluokkaa
      * @param nimi tallennettva nimiolio
+     * //TODO lisää talletus
+     *public void talletus(Nimi nimi) {
+     *   super.talletus(tiedosto, nimi.toString());
+     *}
      */
-    public void talletus(Nimi nimi) {
-        super.talletus(tiedosto, nimi.toString());
-    }
     
-    /** lisää nimen testejä varten, id = 15 
+    /** lisää nimen testejä varten
      *  TODO poisto ku toimii
+     * @param rataId id radalle
      */
-    public void perusNimi() {
-        Nimi perus = new Nimi(15, "PerusNimi");
+    public void perusNimi(int rataId) {
+        Nimi perus = new Nimi(rataId, "PerusNimi");
         lisaa(perus);
     }
     
@@ -83,12 +103,10 @@ public class Nimet extends Rata {
     */ 
     public static void main (String[] args) {
         Nimet perus = new Nimet();
-        perus.perusNimi();
+        perus.perusNimi(15);
         Nimi puolanka = new Nimi(6
                 ,"Puolanka");
         perus.lisaa(puolanka);
-        String[] rata2 = perus.patki(perus.getNimi(0).toString());
-        System.out.println("Radan ID: " + rata2[0] + ", Radan nimi: " + rata2[1]);
         
         System.out.println(perus.etsiNimi(6).toString());
         System.out.println(perus.etsiNimi(15).toString());

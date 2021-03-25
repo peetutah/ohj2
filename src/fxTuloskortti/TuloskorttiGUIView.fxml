@@ -9,7 +9,6 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.input.KeyCodeCombination?>
@@ -75,59 +74,40 @@
    <left>
       <BorderPane BorderPane.alignment="CENTER">
          <center>
-            <VBox BorderPane.alignment="TOP_CENTER">
+            <VBox alignment="CENTER" BorderPane.alignment="TOP_CENTER">
                <children>
-                  <VBox prefWidth="200.0">
-                     <children>
-                        <Label alignment="CENTER" minHeight="20.0" prefWidth="200.0" text="Radat">
-                           <VBox.margin>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </VBox.margin></Label>
-                        <ToolBar minHeight="30.0">
-                          <items>
-                              <TextField promptText="Haku" />
-                          </items>
-                        </ToolBar>
-                        <ScrollPane hbarPolicy="NEVER" minHeight="100.0" prefHeight="200.0">
-                           <content>
-                              <ListChooser rivit="Toppila&#10;Laajavuori&#10;Virpiniemi&#10;Puolanka&#10;Hiironen&#10;Kempele" />
-                           </content>
-                        </ScrollPane>
-                     </children>
-                  </VBox>
-                  <VBox prefWidth="200.0">
-                     <children>
-                        <Label alignment="CENTER" blendMode="SRC_ATOP" minHeight="20.0" prefWidth="200.0" text="Tuloskortit">
-                           <VBox.margin>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </VBox.margin></Label>
-                        <ToolBar minHeight="30.0">
-                          <items>
-                              <TextField promptText="Haku" />
-                              <ToggleButton alignment="CENTER_RIGHT" mnemonicParsing="false" text="^v" />
-                          </items>
-                        </ToolBar>
-                        <ScrollPane hbarPolicy="NEVER" hmax="0.5" minWidth="100.0" prefHeight="200.0">
-                           <content>
-                              <ListChooser rivit="Toppila 1.1.2018&#10;Toppila 3.1.2018&#10;Toppila 8.1.2018&#10;Toppila 12.1.2018&#10;Toppila 31.1.2018&#10;Toppila 31.1.2018&#10;Toppila 31.1.2018&#10;Toppila 31.1.2018&#10;Toppila 31.1.2018&#10;Toppila 31.1.2018&#10;Toppila 31.1.2018&#10;Toppila 31.1.2018" />
-                           </content>
-                        </ScrollPane>
-                     </children>
-                  </VBox>
+                  <Label alignment="CENTER" minHeight="20.0" prefWidth="200.0" text="Radat">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </VBox.margin>
+                  </Label>
+                  <ToolBar minHeight="30.0">
+                    <items>
+                        <TextField fx:id="hakuehto" onAction="#handleHakuEhto" promptText="Haku" />
+                    </items>
+                  </ToolBar>
+                  <ScrollPane hbarPolicy="NEVER">
+                     <content>
+                        <ListChooser fx:id="chooserRata" editable="true" rivit="Toppila&#10;Laajavuori&#10;Virpiniemi&#10;Puolanka&#10;Hiironen&#10;Kempele" />
+                     </content>
+                  </ScrollPane>
+                  <Label fx:id="labelVirhe" alignment="CENTER">
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                  </Label>
                </children>
             </VBox>
          </center>
       </BorderPane>
    </left>
    <center>
-      <ScrollPane fitToWidth="true" BorderPane.alignment="CENTER">
+      <ScrollPane fx:id="panelRata" fitToWidth="true" BorderPane.alignment="CENTER">
          <content>
-            <GridPane hgap="10.0">
+            <GridPane hgap="10.0" minHeight="10.0">
               <columnConstraints>
                   <ColumnConstraints fillWidth="false" halignment="CENTER" hgrow="SOMETIMES" minWidth="20.0" />
                 <ColumnConstraints fillWidth="false" halignment="CENTER" hgrow="SOMETIMES" minWidth="20.0" />
-                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="50.0" minWidth="10.0" />
-                  <ColumnConstraints fillWidth="false" halignment="CENTER" hgrow="SOMETIMES" minWidth="20.0" />
                   <ColumnConstraints />
               </columnConstraints>
               <rowConstraints>
@@ -156,87 +136,45 @@
                   <Insets left="10.0" right="10.0" top="10.0" />
                </padding>
                <children>
-                  <Label text="Par" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Label text="3" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <Label text="3" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <Label text="3" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                  <Label text="3" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                  <Label text="3" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                  <Label text="3" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                  <Label text="3" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-                  <Label text="4" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-                  <Label layoutX="53.0" layoutY="267.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="10" />
-                  <Label layoutX="53.0" layoutY="27.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="11" />
-                  <Label layoutX="53.0" layoutY="57.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="12" />
-                  <Label layoutX="53.0" layoutY="87.0" text="5" GridPane.columnIndex="1" GridPane.rowIndex="13" />
-                  <Label layoutX="53.0" layoutY="117.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="14" />
-                  <Label layoutX="53.0" layoutY="147.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="15" />
-                  <Label layoutX="53.0" layoutY="177.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="16" />
-                  <Label layoutX="53.0" layoutY="207.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="17" />
-                  <Label layoutX="53.0" layoutY="237.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="18" />
-                  <Label layoutX="53.0" layoutY="537.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="19" />
-                  <Label text="Tulos" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                  <TextField editable="false" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" />
-                  <TextField editable="false" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" />
-                  <TextField editable="false" layoutX="41.0" layoutY="53.0" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" />
-                  <TextField editable="false" layoutX="41.0" layoutY="83.0" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" />
-                  <TextField editable="false" layoutX="107.0" layoutY="53.0" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="6" />
-                  <TextField editable="false" layoutX="107.0" layoutY="83.0" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="7" />
-                  <TextField editable="false" layoutX="20.0" layoutY="23.0" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="8" />
-                  <TextField editable="false" layoutX="20.0" layoutY="23.0" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="9" />
-                  <TextField editable="false" layoutX="107.0" layoutY="53.0" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="10" />
-                  <TextField editable="false" layoutX="107.0" layoutY="83.0" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="11" />
-                  <TextField editable="false" layoutX="20.0" layoutY="23.0" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="12" />
-                  <TextField editable="false" layoutX="20.0" layoutY="23.0" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="13" />
-                  <TextField editable="false" layoutX="20.0" layoutY="23.0" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="14" />
-                  <TextField editable="false" layoutX="20.0" layoutY="23.0" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="15" />
-                  <TextField editable="false" layoutX="20.0" layoutY="23.0" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="16" />
-                  <TextField editable="false" layoutX="20.0" layoutY="23.0" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="17" />
-                  <TextField editable="false" layoutX="20.0" layoutY="23.0" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="18" />
-                  <TextField editable="false" layoutX="20.0" layoutY="23.0" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="19" />
-                  <Label layoutX="20.0" layoutY="27.0" text="PB" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="1" />
-                  <Label layoutX="30.0" layoutY="57.0" text="1" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="2" />
-                  <Label layoutX="30.0" layoutY="87.0" text="1" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="3" />
-                  <Label layoutX="30.0" layoutY="117.0" text="1" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="4" />
-                  <Label layoutX="30.0" layoutY="147.0" text="1" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="5" />
-                  <Label layoutX="30.0" layoutY="177.0" text="1" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="6" />
-                  <Label layoutX="30.0" layoutY="207.0" text="1" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="7" />
-                  <Label layoutX="30.0" layoutY="237.0" text="1" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="8" />
-                  <Label layoutX="30.0" layoutY="267.0" text="1" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="9" />
-                  <Label layoutX="30.0" layoutY="297.0" text="1" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="10" />
-                  <Label layoutX="30.0" layoutY="327.0" text="1" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="11" />
-                  <Label layoutX="30.0" layoutY="357.0" text="1" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="12" />
-                  <Label layoutX="30.0" layoutY="387.0" text="1" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="13" />
-                  <Label layoutX="30.0" layoutY="417.0" text="1" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="14" />
-                  <Label layoutX="30.0" layoutY="447.0" text="1" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="15" />
-                  <Label layoutX="30.0" layoutY="477.0" text="1" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="16" />
-                  <Label layoutX="30.0" layoutY="507.0" text="1" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="17" />
-                  <Label layoutX="30.0" layoutY="537.0" text="1" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="18" />
-                  <Label layoutX="30.0" layoutY="567.0" text="1" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="19" />
-                  <Label text="Virpiniemi 12.6.2010" GridPane.columnSpan="2147483647" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
-                     <GridPane.margin>
-                        <Insets />
-                     </GridPane.margin>
-                  </Label>
-                  <Label layoutX="52.0" layoutY="50.0" text="Väylä" GridPane.rowIndex="1" />
-                  <Label layoutX="66.0" layoutY="71.0" text="1" GridPane.rowIndex="2" />
-                  <Label layoutX="66.0" layoutY="96.0" text="2" GridPane.rowIndex="3" />
-                  <Label layoutX="66.0" layoutY="121.0" text="3" GridPane.rowIndex="4" />
-                  <Label layoutX="66.0" layoutY="146.0" text="4" GridPane.rowIndex="5" />
-                  <Label layoutX="66.0" layoutY="171.0" text="5" GridPane.rowIndex="6" />
-                  <Label layoutX="66.0" layoutY="196.0" text="6" GridPane.rowIndex="7" />
-                  <Label layoutX="66.0" layoutY="221.0" text="7" GridPane.rowIndex="8" />
-                  <Label layoutX="66.0" layoutY="246.0" text="8" GridPane.rowIndex="9" />
-                  <Label layoutX="66.0" layoutY="271.0" text="9" GridPane.rowIndex="10" />
-                  <Label layoutX="66.0" layoutY="296.0" text="10" GridPane.rowIndex="11" />
-                  <Label layoutX="66.0" layoutY="321.0" text="11" GridPane.rowIndex="12" />
-                  <Label layoutX="66.0" layoutY="346.0" text="12" GridPane.rowIndex="13" />
-                  <Label layoutX="66.0" layoutY="371.0" text="13" GridPane.rowIndex="14" />
-                  <Label layoutX="66.0" layoutY="396.0" text="14" GridPane.rowIndex="15" />
-                  <Label layoutX="66.0" layoutY="421.0" text="15" GridPane.rowIndex="16" />
-                  <Label layoutX="66.0" layoutY="446.0" text="16" GridPane.rowIndex="17" />
-                  <Label layoutX="66.0" layoutY="471.0" text="17" GridPane.rowIndex="18" />
-                  <Label layoutX="66.0" layoutY="496.0" text="18" GridPane.rowIndex="19" />
+                  <TextField minHeight="10.0" GridPane.columnSpan="2147483647" GridPane.halignment="LEFT" />
+                  <Label minHeight="10.0" text="Väylä" GridPane.rowIndex="1" />
+                  <Label minHeight="10.0" text="1" GridPane.rowIndex="2" />
+                  <Label minHeight="10.0" text="2" GridPane.rowIndex="3" />
+                  <Label minHeight="10.0" text="3" GridPane.rowIndex="4" />
+                  <Label minHeight="10.0" text="4" GridPane.rowIndex="5" />
+                  <Label minHeight="10.0" text="5" GridPane.rowIndex="6" />
+                  <Label minHeight="10.0" text="6" GridPane.rowIndex="7" />
+                  <Label minHeight="10.0" text="7" GridPane.rowIndex="8" />
+                  <Label minHeight="10.0" text="8" GridPane.rowIndex="9" />
+                  <Label minHeight="10.0" text="9" GridPane.rowIndex="10" />
+                  <Label minHeight="10.0" text="10" GridPane.rowIndex="11" />
+                  <Label minHeight="10.0" text="11" GridPane.rowIndex="12" />
+                  <Label minHeight="10.0" text="12" GridPane.rowIndex="13" />
+                  <Label minHeight="10.0" text="13" GridPane.rowIndex="14" />
+                  <Label minHeight="10.0" text="14" GridPane.rowIndex="15" />
+                  <Label minHeight="10.0" text="15" GridPane.rowIndex="16" />
+                  <Label minHeight="10.0" text="16" GridPane.rowIndex="17" />
+                  <Label minHeight="10.0" text="17" GridPane.rowIndex="18" />
+                  <Label minHeight="10.0" text="18" GridPane.rowIndex="19" />
+                  <Label minHeight="10.0" text="Par" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+		  		  <TextField alignment="CENTER" text="1" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <TextField alignment="CENTER" text="2" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <TextField alignment="CENTER" text="3" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <TextField alignment="CENTER" text="4" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <TextField alignment="CENTER" text="5" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                  <TextField alignment="CENTER" text="6" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                  <TextField alignment="CENTER" text="7" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                  <TextField alignment="CENTER" text="8" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                  <TextField alignment="CENTER" text="9" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                  <TextField alignment="CENTER" text="10" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+                  <TextField alignment="CENTER" text="11" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+                  <TextField alignment="CENTER" text="12" GridPane.columnIndex="1" GridPane.rowIndex="13" />
+                  <TextField alignment="CENTER" text="13" GridPane.columnIndex="1" GridPane.rowIndex="14" />
+                  <TextField alignment="CENTER" text="14" GridPane.columnIndex="1" GridPane.rowIndex="15" />
+                  <TextField alignment="CENTER" text="15" GridPane.columnIndex="1" GridPane.rowIndex="16" />
+                  <TextField alignment="CENTER" text="16" GridPane.columnIndex="1" GridPane.rowIndex="17" />
+                  <TextField alignment="CENTER" text="17" GridPane.columnIndex="1" GridPane.rowIndex="18" />
+                  <TextField alignment="CENTER" text="18" GridPane.columnIndex="1" GridPane.rowIndex="19" />
                </children>
                <opaqueInsets>
                   <Insets />

@@ -8,9 +8,9 @@ import java.util.*;
  * @version 21.3.2021
  *
  */
-public class Parit extends Rata implements Iterable<Par>{
+public class Parit implements Iterable<Par>{
     
-    private String tiedosto = "parkoe.txt"; // TODO vaihto oikeaan
+    private String tiedosto = ""; // TODO vaihto oikeaan
     private final Collection<Par> alkiot = new ArrayList<Par>();
     
     
@@ -24,10 +24,11 @@ public class Parit extends Rata implements Iterable<Par>{
     
     /** tallennus parille, kutsuu yläluokkaa
      * @param par tallennettava par-olio
-     */
+     //TODO lisää talletus
     public void talletus(Par par) {
         super.talletus(tiedosto, par.toString());
     }
+    */
 
     
     /** lisää uuden parin tietorakenteeseen
@@ -121,12 +122,13 @@ public class Parit extends Rata implements Iterable<Par>{
     
     
     /**
-     * lisää oletusradan testausta varten, rataid 15
+     * lisää oletusradan testausta varten
      * TODO poista kun luokka toimii
+     * @param rataId id radalle
      */
-    public void perusParit() {
+    public void perusParit(int rataId) {
         for(int i = 0; i < 18; i++) {
-            lisaa(new Par(15, i + 1, 3));
+            lisaa(new Par(rataId, i + 1, 3));
         }
     }
     
@@ -136,7 +138,7 @@ public class Parit extends Rata implements Iterable<Par>{
     */
     public static void main(String[] args) {
         Parit par = new Parit();
-        par.perusParit();
+        par.perusParit(15);
         for(Par p : par.alkiot ) {
             System.out.println(p.toString());
         }

@@ -5,7 +5,7 @@ package tuloskortti;
  * @version 21.3.2021
  *
  */
-public class Nimi extends Nimet{
+public class Nimi{
     
     private String nimi;
     private int nimiId;

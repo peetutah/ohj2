@@ -6,7 +6,7 @@ package tuloskortti;
  * @version 21.3.2021
  */
 
-public class Par  extends Parit{
+public class Par{
     private int parId;
     private int vayla;
     private int par;
