@@ -8,7 +8,7 @@ package tuloskortti;
 public class Nimet{
     
 
-    private static final int maxNimia = 5; 
+    private static final int maxNimia = 2; 
     private int lkm;
     private String tiedosto = ""; //TODO vaihto oikeaan
     private Nimi alkiot[] = new Nimi[maxNimia];
@@ -22,27 +22,41 @@ public class Nimet{
     }
     
     
-    @Override 
-    public Nimet clone(){
-        
-        Nimet klooni = new Nimet();
-        klooni.lkm = this.getlkm();
-        klooni.alkiot = new Nimi[this.lkm + 2];
-        
-        for (int i = 0; i < this.alkiot.length; i++) {
-            klooni.alkiot[i] = this.alkiot[i];
+    /**
+     * Kuormittaa tavallisen kloonauksen, kloonaa taulukon lisäten sinne yhden lisäpaikan
+     * @return palauttaa sisällöltään identtisen taulukon jossa yksi paikka enemmän
+     */
+    @Override
+    public Nimi[] clone(){
+        int koko = alkiot.length;
+        Nimi[] klooni = new Nimi[koko + 1];
+        for (int i = 0; i < koko; i++) {
+            Nimi n = this.alkiot[i];
+            klooni[i] = n;
         }
         return klooni;
-        
     }
-
+    
     
     /** lisää uuden nimen tietoihin
      * @param n uusi nimi
+     * @example
+     * <pre name="test">
+     * Nimet koe = new Nimet();
+     * Nimi n3 = new Nimi(3, "Kolmas");
+     * Nimi n1 = new Nimi(1, "eka");
+     * Nimi n2 = new Nimi(2, "toinen");
+     * koe.getlkm() === 0;
+     * koe.lisaa(n1);
+     * koe.lisaa(n3);
+     * koe.getlkm() === 2;
+     * koe.lisaa(n2);
+     * koe.getlkm() === 3;
+     * </pre>
      */
     public void lisaa(Nimi n){
         if(lkm >= alkiot.length) {
-           this.alkiot = this.clone().alkiot;
+           this.alkiot = clone();
         }
         alkiot[lkm] = n;
         lkm++;
@@ -60,8 +74,25 @@ public class Nimet{
      * @param paikka paikka taulukossa
      * @return palauttaa paikassa olevan nimen
      * @throws IndexOutOfBoundsException jos yli taulukon rajoista
+     * @throws NullPointerException jos ei ole löydy
+     * @example
+     * <pre name="test">
+     * #THROWS IndexOutOfBoundsException
+     * Nimet koe = new Nimet();
+     * Nimi n3 = new Nimi(3, "Kolmas");
+     * Nimi n1 = new Nimi(1, "eka");
+     * Nimi n2 = new Nimi(2, "toinen");
+     * koe.lisaa(n1);
+     * koe.anna(1) === null; #THROWS IndexOutOfBoundsException
+     * koe.lisaa(n3);
+     * koe.lisaa(n2);
+     * koe.anna(0).toString() === "1|eka";
+     * koe.anna(1).toString() === "3|Kolmas";
+     * koe.anna(2).toString() === "2|toinen";
+     * koe.anna(3) === null; #THROWS IndexOutOfBoundsException
+     * </pre>
      */
-    public Nimi anna(int paikka) throws IndexOutOfBoundsException {
+    public Nimi anna(int paikka) throws IndexOutOfBoundsException{
             if ( paikka < 0 || lkm <= paikka ) throw new IndexOutOfBoundsException("Indeksi ulkona taulukosta:" + paikka);
             return this.alkiot [paikka];
     }
@@ -70,9 +101,22 @@ public class Nimet{
     /** hakee nimen alkioista id:n perusteella
      * @param id Rataid minkä pohjalta etsitään
      * @return palauttaa id:tä vastaavan nimiolion
-     * @throws NullPointerException jos ei löydy
+     * @example
+     * <pre name="test">
+     * Nimet koe = new Nimet();
+     * Nimi n3 = new Nimi(3, "Kolmas");
+     * Nimi n1 = new Nimi(1, "eka");
+     * Nimi n2 = new Nimi(2, "toinen");
+     * koe.lisaa(n1);
+     * koe.lisaa(n3);
+     * koe.lisaa(n2);
+     * koe.etsiNimi(1).toString() === "1|eka";
+     * koe.etsiNimi(3).toString() === "3|Kolmas";
+     * koe.etsiNimi(2).toString() === "2|toinen";
+     * koe.etsiNimi(0) === null;
+     * </pre>
      */
-    public Nimi etsiNimi(int id) throws NullPointerException {
+    public Nimi etsiNimi(int id) {
         for (int i = 0; i < this.getlkm(); i++) {
             if( anna(i).getRataId() == id) return anna(i);
         }
@@ -87,6 +131,7 @@ public class Nimet{
      *   super.talletus(tiedosto, nimi.toString());
      *}
      */
+    
     
     /** lisää nimen testejä varten
      *  TODO poisto ku toimii

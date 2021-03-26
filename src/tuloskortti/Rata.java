@@ -30,23 +30,39 @@ public class Rata {
     
     /**
      * rekisteroi uuden radan
+     * @example
+     * <pre name="test">
+     * Rata koe = new Rata();
+     * koe.getId() === 0;
+     * koe.rekisteroi();
+     * koe.getId() === 1;
+     * </pre>
      */
     public void rekisteroi() {
         this.rataId = juoksevaId;
         juoksevaId++;
     }
     
-    
+    //Arrays.toString(ok) === "["Perus", "3", "3", "3", "3", "3", "3", "3", "3", "3", "3", "3", "3", "3", "3", "3", "3", "3", "3"]";
     /** kasaa radan tiedot String taulukkoon Parit ja Nimet luokista annetun id:n perusteella
      *  Taulukossa ensimmäisenä on radan nimi, jota seuraa ratojen Par luvut. Parin väylä vastaa parluvun paikkaa taulukossa
      * @param id rataid jonka pohjalta rata kasataan
      * @return palauttaa taulukon jossa ensimmäisenä nimi jota seuraavat parit.
+     * @example
+     * <pre name="test">
+     * #import java.util.Arrays;
+     * Rata koe = new Rata();
+     * koe.perusRata();
+     * String[] ok = koe.kasaaRata(0);
+     * Arrays.toString(ok) === "[PerusNimi, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3]";
+     * </pre>
      */
     
     public String[] kasaaRata(int id) {
         
         String[] valmis = new String[19];
-        valmis[0] = nimet.etsiNimi(id).getNimi();
+        Nimi nimi = nimet.etsiNimi(id);
+        valmis[0] = nimi.getNimi();
         int[] parluvut = parit.getRadanParluvut(id);
         
         for (int i = 0; i < parluvut.length; i++) {
@@ -56,34 +72,17 @@ public class Rata {
         return valmis;
     }
     
-    /** luo ja palauttaa radan id:n pohjalta
-     * @param id id jonka pohjalta rata luodaan
-     * @return palauttaa uuden radan
-     */
-    public Rata annaRata(int id) {
-        Rata uusi = new Rata();
-        Nimi un = this.nimet.etsiNimi(id);
-        List <Par> up = this.parit.getRadanPar(id);
-        
-        uusi.nimet.lisaa(un);
-        for(Par p : up) {
-            uusi.parit.lisaa(p);
-        }
-        
-        return uusi;
-    }
-    
-    
-    /**
-     * @return palauttaa radan nimen id:n pohjalta
-     */
-    public String getNimi(){
-        return this.nimet.etsiNimi(getId()).getNimi();
-    }
-    
-    
     /** lisää uuden radan tietoihin String taulukosta
      * @param tiedot Taulukko mistä tiedot kerätään, ensimmäisenä oltava radan nimi, jota seuraavat ratojen Par luvut.
+     * @example
+     * <pre name="test">
+     * #import java.util.Arrays;
+     * Rata koe = new Rata();
+     * String[] em = {"Esimerkki", "1","2","3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18"};
+     * koe.lisaaRata(em);
+     * String[] ok = koe.kasaaRata(0);
+     * Arrays.toString(ok) === "[Esimerkki, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]";
+     * </pre>
      */
     public void lisaaRata(String[] tiedot) {
         
@@ -104,12 +103,18 @@ public class Rata {
     /**
      * laskee ratojen maaran nimitietojen perusteella
      * @return palauttaa ratojen maaran
+     * @example
+     * <pre name="test">
+     * Rata koe = new Rata();
+     * koe.annaRataMaara() === 0;
+     * koe.perusRata();
+     * koe.annaRataMaara() === 1;
+     * </pre>
      */
     public int annaRataMaara(){
         int tulos = 0;
         for (int i = 0; i < juoksevaId; i++) {
-            if (nimet.etsiNimi(i) != null);
-            tulos ++;
+            if (nimet.etsiNimi(i) != null) tulos ++;
         }
         return tulos;
     }
@@ -153,6 +158,8 @@ public class Rata {
      */
     public static void  main(String[] args) {
         Rata testirata = new Rata();
+        
+        testirata.perusRata();
 
         testirata.parit.perusParit(testirata.rataId);
         testirata.nimet.perusNimi(testirata.rataId);
