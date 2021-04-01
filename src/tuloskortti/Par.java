@@ -11,6 +11,7 @@ public class Par{
     private int vayla;
     private int par;
     
+    
     /**
      * konstruktori parin alustamista varten
      * @param id radan id
@@ -22,8 +23,16 @@ public class Par{
         this.vayla = vayla;
         this.par = par;
     }
+    
+    
+    /**
+     * tyhjä muodostaja
+     */
+    public Par() { }
 
-    /** get-metodi rataId:lle
+    
+    /** 
+     * get-metodi rataId:lle
      * @return palauttaa radan id luvun    
      * @example
      * <pre name="test">
@@ -43,7 +52,9 @@ public class Par{
         return this.parId;
     }
     
-    /** get-metodi väylälle
+    
+    /** 
+     * get-metodi väylälle
      * @return palauttaa olion väylän luvun
      * @example
      * <pre name="test">
@@ -63,7 +74,9 @@ public class Par{
         return this.vayla;
     }
     
-    /** get-metodi par-luvulle
+    
+    /**
+     * get-metodi par-luvulle
      * @return palauttaa olion par luvun
      * @example
      * <pre name="test">
@@ -83,7 +96,9 @@ public class Par{
         return this.par;
     }
     
-    /**palauttaa olion tiedot merkkijonona
+    
+    /**
+     * palauttaa olion tiedot merkkijonona muodossa "id|väylä|par"
      * @example
      * <pre name="test">
      * Par koe = new Par(0,1,3);
@@ -102,5 +117,44 @@ public class Par{
     public String toString(){
         return this.parId + "|" + this.vayla + "|" + this.par; 
     }
-
+    
+    
+    /**
+     * selvittää Partiedot erotinmerkeillä | erotellusta merkkijonosta
+     * @param jono jonka tiedoista pareja lisätään
+     * @throws NumberFormatException jos muita kuin numeroita
+     * @example
+     * <pre name="test">
+     * #THROWS NumberFormatException
+     * Par koe = new Par();
+     * koe.parse("1 | 2 | 3");
+     * koe.toString() === "1|2|3"
+     * koe.parse("      4 \n\n | \n             5 \n|    \n  6 \n ");
+     * koe.toString() === "4|5|6";
+     * koe.parse("2 | esim | 1 "); #THROWS NumberFormatException
+     * koe.parse("|"); #THROWS NumberFormatException 
+     * </pre>
+     */
+    
+    public void parse(String jono) throws NumberFormatException{
+        
+        String rivi = jono.trim();
+        int a = 0;
+        int b = 0;
+        int[] tieto = new int[3];
+        
+        for (int i = 0; i <= tieto.length; i++){
+            b = rivi.indexOf("|", a);
+            if (b == -1) { tieto[i] = Integer.parseInt(rivi.substring(a).trim()); break; }
+            tieto[i] = Integer.parseInt(rivi.substring(a, b).trim());
+            a = b + 1;
+        }
+        this.parId = tieto[0];
+        this.vayla = tieto[1];
+        this.par = tieto[2];
+        
+        
+    }
+    
+    
 }

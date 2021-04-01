@@ -1,13 +1,5 @@
 package tuloskortti;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.PrintStream;
-import java.util.Scanner;
-
 /** Pääluokka ohjelmalle
  * @author tahvpwzw
  * @version 21.3.2021
@@ -15,21 +7,35 @@ import java.util.Scanner;
  */
 public class Tuloskortti {
     
-    private Rata rata = new Rata(); 
+    private Rata rata; //TODO korjaa ku luku toimii
     
     /**
      * tyhjä konstruktori
      */
     public Tuloskortti() {
-        
+       this.rata = new Rata("nimet", "par");
     }
 
-    /**Parsii tekstirivin taulukkoon erotinmerkkien kohdalta, poistaa kaikki ylimääräiset whitespacet
+    
+    /**
+     * Parsii tekstirivin taulukkoon erotinmerkkien kohdalta, poistaa kaikki ylimääräiset whitespacet
      * @param jono mikä pätkitään
      * @return  palauttaa pätkityn merkkijonotaulukon
+     * @example
+     * <pre name="test">
+     * String[] koe = patki("15        | testi ");
+     * koe[0] === "15";
+     * koe[1] === "testi";
+     * String[] koe2 = patki(" 150 \n | \n rivivaihto             ");
+     * koe2[0] === "150";
+     * koe2[1] === "rivivaihto";
+     * String[] koe3 = patki("|");
+     * koe3[0] === "";
+     * koe3[1] === "";
+     * </pre>
      */
-    public String[] patki(String jono){
-        String[] valmis = new String[4];
+    public static String[] patki(String jono){ //TODO KORJAA; YHÄ PARMUODOSSA!!
+        String[] valmis = new String[3];
         String rivi = jono.strip();
         int a = 0;
         int b = 0;
@@ -44,47 +50,9 @@ public class Tuloskortti {
     }
     
     
-    /**
-     * @param tiedosto tiedosto mitä luetaan.
-     * @return palauttaa tiedoston kaksiulotteisessa String taulukossa muodossa => String[rivin nro][ rivin sisältö]
-     */
-    public String[][] tiedostoLuku(String tiedosto) {
-      
-        String rivi;
-        String [][] tulos = new String[270][4];
-        int i = 0;
-        
-        try (Scanner fi = new Scanner(new FileInputStream(new File(tiedosto)))){
-            
-            while(fi.hasNext()) { // TODO oikeat silmukat
-                rivi = fi.nextLine();
-                if (rivi.startsWith(";")) continue;
-                tulos[i] = patki(rivi);
-                i++;
-                
-                
-            }
-        } catch (IOException e) {
-            System.err.println("Tiedosto ei löydy/aukea");
-        }
-        return tulos;
-    }
     
-    
-    /**metodi tallennusta varten
-     * @param tiedosto tiedosto minne tallennetaan
-     * @param tallennettava tallennettava olio merkkijonona
-     */
-    public void talletus(String tiedosto, String tallennettava) {
-        try (PrintStream ulos = new PrintStream(new FileOutputStream(tiedosto, true))) {
-            ulos.printf("\n" + tallennettava);
-        }    catch (FileNotFoundException e) {
-            System.err.println("Tiedosto ei löydy/aukea");
-        }
-    }
-    
-    
-    /** laskee ratojen maaran nimitiedoista aliohjelmalla
+    /** 
+     * laskee ratojen maaran nimitiedoista aliohjelmalla
      * @return ratojen maara
      */
     public int rataMaara() {
@@ -92,32 +60,74 @@ public class Tuloskortti {
     }
     
     
-    /** kutsuu rataoliota hakemaan radan id:n phjalta
-     * @param id pillä haetaan
+    /** 
+     * kutsuu rataoliota hakemaan radan id:n phjalta
+     * @param id millä haetaan
      * @return id:stä kasattu rata
+     * @example
+     * <pre name="test">
+     * #import java.util.Arrays;
+     * Tuloskortti tkoe = new Tuloskortti(1);
+     * tkoe.lisaaPerus();
+     * String[] ok = tkoe.annaRata(1);
+     * Arrays.toString(ok) === "[PerusNimi, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3]"
+     * ok = tkoe.annaRata(2);
+     * Arrays.toString(ok) === "[, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]";
+     * </pre>
      */
-    public String[] annaRata(int id) {
-        return rata.kasaaRata(id);
+    public String[] annaRata(int id){
+        String[] tulos = rata.kasaaRata(id);
+        return tulos;
     }
 
     
-    /** lisää uuden radan tietoihin, luo sen annettujen tietojen pohjalta
+    /** 
+     * lisää uuden radan tietoihin, luo sen annettujen tietojen pohjalta
      * @param ratatiedot taulukko minkä pohjalta uusi rata luodaan
      */
-    public void uusiRata(String[] ratatiedot) {
+    public void lisaaRata(String[] ratatiedot) {
         rata.lisaaRata(ratatiedot);        
     }
     
     
-    /** hakee uusimman radan id:n
+    /** 
+     * hakee uusimman radan id:n
      * @return palauttaa viimeisen rekisteröidyn rataid:n
      */
     public int annaRataId() {
         return rata.getId();
     }
+
     
     /**
-     *  kutsuu rataa lisäämään perusradan
+     * kutsuu tallennusmetodeja
+     */
+    public void tallenna() {
+        rata.tallenna();
+    }
+    
+    
+    /**
+     * kutsuu rataa keräämään tiedot tiedostoista
+     */
+    public void lueTiedostot() {
+        rata.lueTiedostot();
+    }
+    
+// ===================================================================================    
+// testiä ja main   
+    
+    /**
+     * testitarkoituksiin
+     * @param testi radan juoksevanumero
+     */
+    public Tuloskortti(int testi) {
+       this.rata = new Rata(testi);
+    }
+    
+    
+    /**
+     *  kutsuu rataa lisäämään perusradan // TODO poista
      */
     public void lisaaPerus() {
         rata.perusRata();
@@ -128,7 +138,7 @@ public class Tuloskortti {
      */
     public static void main(String[] args) {
         Tuloskortti ok = new Tuloskortti();
-        ok.tiedostoLuku("nimikoe.txt");
-        ok.tiedostoLuku("parkoe.txt");
+        ok.lisaaPerus();
+        ok.annaRata(1);
     }
 }

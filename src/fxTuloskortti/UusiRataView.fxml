@@ -46,45 +46,45 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </padding>
                <children>
-                  <TextField promptText="Radan nimi" GridPane.columnSpan="2147483647" GridPane.halignment="LEFT" />
+                  <TextField fx:id="textUusiNimi" promptText="Radan nimi" GridPane.columnSpan="2147483647" GridPane.halignment="LEFT" />
                   <Label text="Väylä" GridPane.rowIndex="1" />
                   <Label text="Par" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <Label text="1" GridPane.rowIndex="2" />
-                  <TextField alignment="CENTER" maxWidth="50.0" prefWidth="30.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <TextField fx:id="par1" alignment="CENTER" maxWidth="50.0" prefWidth="30.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <Label text="2" GridPane.rowIndex="3" />
-                  <TextField alignment="CENTER" maxWidth="50.0" prefWidth="30.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <TextField fx:id="par2" alignment="CENTER" maxWidth="50.0" prefWidth="30.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                   <Label text="3" GridPane.rowIndex="4" />
-                  <TextField alignment="CENTER" maxWidth="50.0" prefWidth="30.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <TextField fx:id="par3" alignment="CENTER" maxWidth="50.0" prefWidth="30.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                   <Label text="4" GridPane.rowIndex="5" />
-                  <TextField alignment="CENTER" maxWidth="50.0" prefWidth="30.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                  <TextField fx:id="par4" alignment="CENTER" maxWidth="50.0" prefWidth="30.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                   <Label text="5" GridPane.rowIndex="6" />
-                  <TextField alignment="CENTER" maxWidth="50.0" prefWidth="30.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                  <TextField fx:id="par5" alignment="CENTER" maxWidth="50.0" prefWidth="30.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                   <Label text="6" GridPane.rowIndex="7" />
-                  <TextField alignment="CENTER" maxWidth="50.0" prefWidth="30.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                  <TextField fx:id="par6" alignment="CENTER" maxWidth="50.0" prefWidth="30.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                   <Label text="7" GridPane.rowIndex="8" />
-                  <TextField alignment="CENTER" maxWidth="50.0" prefWidth="30.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                  <TextField fx:id="par7" alignment="CENTER" maxWidth="50.0" prefWidth="30.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="8" />
                   <Label text="8" GridPane.rowIndex="9" />
-                  <TextField alignment="CENTER" maxWidth="50.0" prefWidth="30.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                  <TextField fx:id="par8" alignment="CENTER" maxWidth="50.0" prefWidth="30.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="9" />
                   <Label text="9" GridPane.rowIndex="10" />
-                  <TextField alignment="CENTER" maxWidth="50.0" prefWidth="30.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+                  <TextField fx:id="par9" alignment="CENTER" maxWidth="50.0" prefWidth="30.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="10" />
                   <Label text="10" GridPane.rowIndex="11" />
-                  <TextField alignment="CENTER" maxWidth="50.0" prefWidth="30.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+                  <TextField fx:id="par10" alignment="CENTER" maxWidth="50.0" prefWidth="30.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="11" />
                   <Label text="11" GridPane.rowIndex="12" />
-                  <TextField alignment="CENTER" maxWidth="50.0" prefWidth="30.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="13" />
+                  <TextField fx:id="par11" alignment="CENTER" maxWidth="50.0" prefWidth="30.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="12" />
                   <Label text="12" GridPane.rowIndex="13" />
-                  <TextField alignment="CENTER" maxWidth="50.0" prefWidth="30.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="14" />
+                  <TextField fx:id="par12" alignment="CENTER" maxWidth="50.0" prefWidth="30.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="13" />
                   <Label text="13" GridPane.rowIndex="14" />
-                  <TextField alignment="CENTER" maxWidth="50.0" prefWidth="30.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="15" />
+                  <TextField fx:id="par13" alignment="CENTER" maxWidth="50.0" prefWidth="30.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="14" />
                   <Label text="14" GridPane.rowIndex="15" />
-                  <TextField alignment="CENTER" maxWidth="50.0" prefWidth="30.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="16" />
+                  <TextField fx:id="par14" alignment="CENTER" maxWidth="50.0" prefWidth="30.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="15" />
                   <Label text="15" GridPane.rowIndex="16" />
-                  <TextField alignment="CENTER" maxWidth="50.0" prefWidth="30.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="17" />
+                  <TextField fx:id="par15" alignment="CENTER" maxWidth="50.0" prefWidth="30.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="16" />
                   <Label text="16" GridPane.rowIndex="17" />
-                  <TextField alignment="CENTER" maxWidth="50.0" prefWidth="30.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="18" />
+                  <TextField fx:id="par16" alignment="CENTER" maxWidth="50.0" prefWidth="30.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="17" />
                   <Label text="17" GridPane.rowIndex="18" />
-                  <TextField alignment="CENTER" maxWidth="50.0" prefWidth="30.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="19" />
+                  <TextField fx:id="par17" alignment="CENTER" maxWidth="50.0" prefWidth="30.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="18" />
                   <Label text="18" GridPane.rowIndex="19" />
-                  <TextField alignment="CENTER" maxWidth="50.0" prefWidth="30.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <TextField fx:id="par18" alignment="CENTER" maxWidth="50.0" prefWidth="30.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="19" />
                </children>
                <opaqueInsets>
                   <Insets />

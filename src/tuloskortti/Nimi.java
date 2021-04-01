@@ -1,6 +1,7 @@
 package tuloskortti;
 
-/** luokka yhtä radan nimeä varten
+/** 
+ * luokka yhtä radan nimeä varten
  * @author tahvpwzw
  * @version 21.3.2021
  *
@@ -9,6 +10,7 @@ public class Nimi{
     
     private String nimi;
     private int nimiId;
+    
     
     /**
      * @param id radanId
@@ -34,6 +36,13 @@ public class Nimi{
         this.nimiId = id;
     }
     
+    
+    /**
+     * tyhjä muodostaja
+     */
+    public Nimi() { }
+    
+    
     /**
      * @return palauttaa nimen merkkijonona     
      * @example
@@ -55,6 +64,7 @@ public class Nimi{
     public String getNimi() {
         return this.nimi;
     }
+    
     
     /**
      * @return palauttaa radan id luvun
@@ -78,8 +88,40 @@ public class Nimi{
         return this.nimiId;
     }
     
+    
+    /** 
+     * palauttaa nimitiedot muodossa "id|nimi"
+     */
     @Override
     public String toString(){
         return this.nimiId + "|" + this.nimi; 
     }
+    
+    
+    /**
+     * selvittää nimitiedot erotinmerkillä | erotellusta merkkijonosta
+     * @param jono jonka tiedoista nimiä lisätään
+     * @throws NumberFormatException jos jonossa ei ole id:tä
+     * @example
+     * <pre name="test">
+     * #THROWS NumberFormatException
+     * Nimi koe = new Nimi();
+     * koe.parse("1 | koe");
+     * koe.toString() === "1|koe"
+     * koe.parse("      2 \n\n | \n             riviKoe \n");
+     * koe.toString() === "2|riviKoe";
+     * koe.parse(" | "); #THROWS NumberFormatException
+     * </pre>
+     */
+    
+    public void parse(String jono) throws NumberFormatException{
+        
+        String rivi = jono.trim();
+        int erotin = rivi.indexOf("|");
+        
+        this.nimiId = Integer.parseInt(rivi.substring(0, erotin).trim());
+        this.nimi = rivi.substring(erotin +1).trim();
+        
+    }
+
 }
