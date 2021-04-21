@@ -152,8 +152,16 @@ public class Par{
         this.parId = tieto[0];
         this.vayla = tieto[1];
         this.par = tieto[2];
-        
-        
+    }
+    
+    
+    /**
+     * asettaa paroliolle uuden parluvun
+     * @param uusipar uusi parluku oliolle
+     * TODO testit
+     */
+    public void setPar(int uusipar) {
+        this.par = uusipar;
     }
     
     

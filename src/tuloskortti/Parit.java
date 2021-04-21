@@ -194,7 +194,16 @@ public class Parit implements Iterable<Par>{
     }
     
     
-    /** Hakee annetusta Par-taulukosta vain väylien parit
+    
+    /**
+     * ilmoittaa uusista muutoksista
+     */
+    public void setMuutoksia() {
+       this.muutoksia = true;
+    }
+    
+    
+    /** Hakee annetusta Par-taulukosta vain väylien parit jos rataa ei ole palauttaa null
      * @param id on rataId jonka perusteella haetaan
      * @return palauttaa väylien par-luvut taulukossa ja oikeassa järjestyksessä: väylä 1 => 0 | 2 => 1...
      * @example
@@ -226,6 +235,7 @@ public class Parit implements Iterable<Par>{
     public int[] getRadanParluvut(int id) {
         int[] rata = new int[18];
         List<Par> apuPar = getRadanPar(id);
+        if (apuPar.size() <= 0) return null; 
         for (Par parluku : apuPar) {
             rata[parluku.getVayla()-1] = parluku.getPar();
         }
@@ -413,6 +423,53 @@ public class Parit implements Iterable<Par>{
             System.err.println("Tiedosto ei löydy/aukea");
         }
         muutoksia = false;
+    }
+    
+    
+    /**
+     * poistaa partiedot alkioista id:n perusteella, palauttaa 1 jos onnistui, muuten 0
+     * @param id poistettavan id
+     * @return palauttaa 1 jos onnistui, 0 jos tietoja ei ollut
+     * @example
+     * <pre name="test">
+     * #import java.util.*;
+     * 
+     * Parit koe = new Parit();
+     * Par f = new Par(9, 6, 6);
+     * Par c = new Par(9, 3, 3);
+     * Par d = new Par(9, 4, 4);
+     * Par a = new Par(9, 1, 1);
+     * Par e = new Par(9, 5, 5);
+     * Par b = new Par(9, 2, 2);
+     * Par g = new Par(10, 1, 1);
+     * Par h = new Par(10, 2, 2);
+     * koe.lisaa(b);
+     * koe.lisaa(e);
+     * koe.lisaa(c);
+     * koe.lisaa(d);
+     * koe.lisaa(a);
+     * koe.lisaa(f);
+     * koe.lisaa(h);
+     * koe.lisaa(g);
+     * koe.getlkm() === 8;
+     * koe.poista(1) === 0;
+     * koe.poista(9) === 1;
+     * koe.getlkm() === 2;
+     * koe.getRadanParluvut(9) === null;
+     * Arrays.toString(koe.getRadanParluvut(10)) === "[1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]";
+     * </pre>
+     */
+    public int poista(int id) {
+
+        List<Par> poisto = getRadanPar(id);
+        if (poisto.size() <= 0) return 0;
+        
+        for(Par p : poisto) {
+            alkiot.remove(p);
+        }
+        
+        setMuutoksia();
+        return 1;
     }
     
 // ===================================================================================    

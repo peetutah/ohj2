@@ -123,5 +123,15 @@ public class Nimi{
         this.nimi = rivi.substring(erotin +1).trim();
         
     }
+    
+    
+    /**
+     * asettaa nimioliolle uuden nimen
+     * @param uusinimi uusi nimi oliolle
+     * TODO testit
+     */
+    public void setNimi(String uusinimi) {
+        this.nimi = uusinimi;
+    }
 
 }

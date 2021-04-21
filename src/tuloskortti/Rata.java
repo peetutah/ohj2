@@ -1,6 +1,7 @@
 package tuloskortti;
 
-import java.io.PrintStream;
+import java.util.List;
+
 
 /**
  * @author tahvpwzw
@@ -16,7 +17,6 @@ public class Rata {
     private static int juoksevaId = 1;
     private final Nimet nimet;
     private final Parit parit;
-    
     
     
     /**
@@ -44,9 +44,9 @@ public class Rata {
      * @example
      * <pre name="test">
      * Rata koe = new Rata(1);
-     * koe.getId() === 0;
+     * koe.uusinId() === 0;
      * koe.rekisteroi();
-     * koe.getId() === 1;
+     * koe.uusinId() === 1;
      * </pre>
      */
     public void rekisteroi() {
@@ -71,25 +71,50 @@ public class Rata {
      * String[] uusirata2 = {"Virpiniemi", "3", "3", "4", "5", "4", "3", "3", "3", "3", "4", "3", "3", "3", "6", "3", "3", "3", "3"};
      * lisakoe.lisaaRata(uusirata2);
      * lisakoe.annaRataMaara() === 4;
-     * lisakoe.getId() === 4
+     * lisakoe.uusinId() === 4
      * </pre>
      */
-    public void lisaaRata(String[] tiedot) {
+    public void lisaaRata(RataTieto tiedot) {
         rekisteroi();
         
-        int id = getId();
-        String radanNimi = tiedot[0];
+        int id = uusinId();
+        String radanNimi = tiedot.getNimi();
         
         Nimi uusiN = new Nimi(id, radanNimi);
         nimet.lisaa(uusiN);
         
-        for (int i = 1; i < tiedot.length; i++) {
-            int luku = Integer.parseInt(tiedot[i]);
+        int[] parTiedot = tiedot.getParit();
+        
+        for (int i = 1; i < parTiedot.length + 1; i++) {
+            int luku = parTiedot[i - 1];
             Par uusiP = new Par(id, i, luku);
-            parit.lisaa(uusiP);
+            this.parit.lisaa(uusiP);
         }
     }
     
+    
+    
+    /**
+     * korvaa vanhoja ratatietoja id:n perusteella
+     * @param tiedot uudet tiedot
+     */
+    public void korvaaRata(RataTieto tiedot) {
+        
+        int id = tiedot.getId();
+        Nimi kNimi = nimet.etsiNimi(id);
+        kNimi.setNimi(tiedot.getNimi());
+        
+        int vayla = 0;
+        
+        List<Par> kParit = parit.getRadanPar(id);
+        for (Par p : kParit) {
+             vayla = p.getVayla();
+             p.setPar(tiedot.getPar(vayla));
+        }
+        
+        parit.setMuutoksia();
+        nimet.setMuutoksia();
+    }
     
     /** 
      * kasaa radan tiedot String taulukkoon Parit ja Nimet luokista annetun id:n perusteella
@@ -103,24 +128,23 @@ public class Rata {
      * Rata kasakoe = new Rata(1);
      * kasakoe.perusRata();
      * String[] ok = kasakoe.kasaaRata(1);
-     * Arrays.toString(ok) === "[PerusNimi, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3]";
+     * Arrays.toString(ok) === "[1, PerusNimi, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3]";
      * ok = kasakoe.kasaaRata(2);
-     * Arrays.toString(ok) === "[, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]";
+     * Arrays.toString(ok) === "[2, , null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]";
      * </pre>
      */
     
-    public String[] kasaaRata(int id){
+    public RataTieto kasaaRata(int id){
         
-        String[] valmis = new String[19];
-        if(nimet.etsiNimi(id) == null) { valmis[0] = ""; return valmis; };
+        RataTieto valmis = new RataTieto();
+        valmis.setId(id);
+        
+        if(nimet.etsiNimi(id) == null) { return valmis; };
         
         Nimi rataN = nimet.etsiNimi(id);
-        valmis[0] = rataN.getNimi();
-        int[] parluvut = parit.getRadanParluvut(id);
+        valmis.setNimi(rataN.getNimi());
+        valmis.setParit(parit.getRadanParluvut(id));
         
-        for (int i = 0; i < parluvut.length; i++) {
-            valmis[i +1] = "" + parluvut[i];
-        }
         return valmis;
     }
     
@@ -140,21 +164,6 @@ public class Rata {
          return nimet.getTosiMaara();
     }
     
-
-    //TODO akuutisti päivitystä vailla, ehkä turha
-    /**
-     * @param out Printstream johon tulostellaan
-     * @param id tulostettavan radan id
-     */
-    public void tulosta(PrintStream out, int id) {
-        
-        String[] ratatieto = kasaaRata(id);
-        
-        for(String s : ratatieto) {
-        out.println(s);    
-        }
-        
-    }
     
 
     /** hakumetodi radan ID:lle
@@ -162,14 +171,14 @@ public class Rata {
      * @example
      * <pre name="test">
      * Rata koe = new Rata(1);
-     * koe.getId() === 0;
+     * koe.uusinId() === 0;
      * koe.rekisteroi();
-     * koe.getId() === 1;
+     * koe.uusinId() === 1;
      * koe.perusRata();
-     * koe.getId() === 2;
+     * koe.uusinId() === 2;
      * </pre>
      */
-    public int getId() {
+    public int uusinId() {
         return this.rataId;
     }
     
@@ -189,8 +198,40 @@ public class Rata {
     public void lueTiedostot() {
         nimet.lueTiedosto();
         juoksevaId = nimet.getJuoksevaId() +1;
+        rataId = nimet.getJuoksevaId();
         parit.lueTiedosto();
     }
+    
+    
+    /**
+     * korvaa tai lisää ratatietoja, riippuen onko tietoja jo olemassa
+     * @param tiedot uudet tiedot
+     * @return palauttaa korvasiko (true) vai lisäsikö (false)
+     */
+    public boolean korvaaTaiLisaa(RataTieto tiedot) {
+        int id = tiedot.getId(); 
+        Nimi uNimi = nimet.etsiNimi(id);
+        if (uNimi != null) { 
+            korvaaRata(tiedot);
+            return true;
+        }
+        lisaaRata(tiedot);
+        return false;
+        
+    }
+    
+    
+    /**
+     * poistaa radan tiedot nimistä ja pareista
+     * @param id poistettavan radan id
+     * @return palauttaa 1 jos toinen onnistui, 2 jos molemmat, 0 jos epäonnistui
+     */
+    public int poista(int id) {
+        int n = nimet.poista(id);
+        int p = parit.poista(id);
+        return n + p;
+    }
+    
     
 // ===================================================================================    
 // testiä ja main

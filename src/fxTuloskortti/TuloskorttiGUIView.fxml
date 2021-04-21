@@ -31,12 +31,7 @@
                   <Tooltip text="Avaa uuden" />
                </tooltip>
             </Button>
-            <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleLisaa" text="Lisää">
-               <tooltip>
-                  <Tooltip text="lisää nykyisen" />
-               </tooltip>
-            </Button>
-            <Button mnemonicParsing="false" onAction="#handleMuokkaa" text="Muokkaa ratoja">
+            <Button mnemonicParsing="false" onAction="#handleMuokkaa" text="Muokkaa">
                <tooltip>
                   <Tooltip text="Muuta radan tietoja" />
                </tooltip>
@@ -56,7 +51,7 @@
             <items>
                   <MenuItem mnemonicParsing="false" onAction="#handleTallenna" text="Tallenna">
                      <accelerator>
-                        <KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                        <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator>
                   </MenuItem>
                   <MenuItem mnemonicParsing="false" onAction="#handleLopeta" text="Lopeta">
@@ -98,17 +93,19 @@
                   </ToolBar>
                   <ScrollPane hbarPolicy="NEVER">
                      <content>
-                        <ListChooser fx:id="chooserRata" editable="true" rivit="Toppila&#10;Laajavuori&#10;Virpiniemi&#10;Puolanka&#10;Hiironen&#10;Kempele" />
+                        <ListChooser fx:id="chooserRata" rivit="" />
                      </content>
                   </ScrollPane>
-                  <Label fx:id="labelVirhe" alignment="CENTER">
-                     <padding>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </padding>
-                  </Label>
                </children>
             </VBox>
          </center>
+         <bottom>
+            <Label fx:id="labelVirhe" alignment="CENTER" BorderPane.alignment="CENTER">
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </Label>
+         </bottom>
       </BorderPane>
    </left>
    <center>
@@ -145,45 +142,45 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </padding>
                <children>
-                  <TextField fx:id="textUusiNimi" promptText="Radan nimi" GridPane.columnSpan="2147483647" GridPane.halignment="LEFT" />
+                  <TextField fx:id="editNimi" editable="false" promptText="Radan nimi" GridPane.columnSpan="2147483647" GridPane.halignment="LEFT" />
                   <Label text="Väylä" GridPane.rowIndex="1" />
                   <Label text="Par" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <Label text="1" GridPane.rowIndex="2" />
-                  <TextField fx:id="par1" alignment="CENTER" maxWidth="50.0" prefWidth="30.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <TextField fx:id="editPar1" alignment="CENTER" editable="false" maxWidth="50.0" prefWidth="30.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <Label text="2" GridPane.rowIndex="3" />
-                  <TextField fx:id="par2" alignment="CENTER" maxWidth="50.0" prefWidth="30.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <TextField fx:id="editPar2" alignment="CENTER" editable="false" maxWidth="50.0" prefWidth="30.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                   <Label text="3" GridPane.rowIndex="4" />
-                  <TextField fx:id="par3" alignment="CENTER" maxWidth="50.0" prefWidth="30.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <TextField fx:id="editPar3" alignment="CENTER" editable="false" maxWidth="50.0" prefWidth="30.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                   <Label text="4" GridPane.rowIndex="5" />
-                  <TextField fx:id="par4" alignment="CENTER" maxWidth="50.0" prefWidth="30.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <TextField fx:id="editPar4" alignment="CENTER" editable="false" maxWidth="50.0" prefWidth="30.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                   <Label text="5" GridPane.rowIndex="6" />
-                  <TextField fx:id="par5" alignment="CENTER" maxWidth="50.0" prefWidth="30.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                  <TextField fx:id="editPar5" alignment="CENTER" editable="false" maxWidth="50.0" prefWidth="30.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                   <Label text="6" GridPane.rowIndex="7" />
-                  <TextField fx:id="par6" alignment="CENTER" maxWidth="50.0" prefWidth="30.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                  <TextField fx:id="editPar6" alignment="CENTER" editable="false" maxWidth="50.0" prefWidth="30.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                   <Label text="7" GridPane.rowIndex="8" />
-                  <TextField fx:id="par7" alignment="CENTER" maxWidth="50.0" prefWidth="30.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                  <TextField fx:id="editPar7" alignment="CENTER" editable="false" maxWidth="50.0" prefWidth="30.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
                   <Label text="8" GridPane.rowIndex="9" />
-                  <TextField fx:id="par8" alignment="CENTER" maxWidth="50.0" prefWidth="30.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                  <TextField fx:id="editPar8" alignment="CENTER" editable="false" maxWidth="50.0" prefWidth="30.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
                   <Label text="9" GridPane.rowIndex="10" />
-                  <TextField fx:id="par9" alignment="CENTER" maxWidth="50.0" prefWidth="30.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                  <TextField fx:id="editPar9" alignment="CENTER" editable="false" maxWidth="50.0" prefWidth="30.0" GridPane.columnIndex="1" GridPane.rowIndex="10" />
                   <Label text="10" GridPane.rowIndex="11" />
-                  <TextField fx:id="par10" alignment="CENTER" maxWidth="50.0" prefWidth="30.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+                  <TextField fx:id="editPar10" alignment="CENTER" editable="false" maxWidth="50.0" prefWidth="30.0" GridPane.columnIndex="1" GridPane.rowIndex="11" />
                   <Label text="11" GridPane.rowIndex="12" />
-                  <TextField fx:id="par11" alignment="CENTER" maxWidth="50.0" prefWidth="30.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+                  <TextField fx:id="editPar11" alignment="CENTER" editable="false" maxWidth="50.0" prefWidth="30.0" GridPane.columnIndex="1" GridPane.rowIndex="12" />
                   <Label text="12" GridPane.rowIndex="13" />
-                  <TextField fx:id="par12" alignment="CENTER" maxWidth="50.0" prefWidth="30.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="13" />
+                  <TextField fx:id="editPar12" alignment="CENTER" editable="false" maxWidth="50.0" prefWidth="30.0" GridPane.columnIndex="1" GridPane.rowIndex="13" />
                   <Label text="13" GridPane.rowIndex="14" />
-                  <TextField fx:id="par13" alignment="CENTER" maxWidth="50.0" prefWidth="30.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="14" />
+                  <TextField fx:id="editPar13" alignment="CENTER" editable="false" maxWidth="50.0" prefWidth="30.0" GridPane.columnIndex="1" GridPane.rowIndex="14" />
                   <Label text="14" GridPane.rowIndex="15" />
-                  <TextField fx:id="par14" alignment="CENTER" maxWidth="50.0" prefWidth="30.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="15" />
+                  <TextField fx:id="editPar14" alignment="CENTER" editable="false" maxWidth="50.0" prefWidth="30.0" GridPane.columnIndex="1" GridPane.rowIndex="15" />
                   <Label text="15" GridPane.rowIndex="16" />
-                  <TextField fx:id="par15" alignment="CENTER" maxWidth="50.0" prefWidth="30.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="16" />
+                  <TextField fx:id="editPar15" alignment="CENTER" editable="false" maxWidth="50.0" prefWidth="30.0" GridPane.columnIndex="1" GridPane.rowIndex="16" />
                   <Label text="16" GridPane.rowIndex="17" />
-                  <TextField fx:id="par16" alignment="CENTER" maxWidth="50.0" prefWidth="30.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="17" />
+                  <TextField fx:id="editPar16" alignment="CENTER" editable="false" maxWidth="50.0" prefWidth="30.0" GridPane.columnIndex="1" GridPane.rowIndex="17" />
                   <Label text="17" GridPane.rowIndex="18" />
-                  <TextField fx:id="par17" alignment="CENTER" maxWidth="50.0" prefWidth="30.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="18" />
+                  <TextField fx:id="editPar17" alignment="CENTER" editable="false" maxWidth="50.0" prefWidth="30.0" GridPane.columnIndex="1" GridPane.rowIndex="18" />
                   <Label text="18" GridPane.rowIndex="19" />
-                  <TextField fx:id="par18" alignment="CENTER" maxWidth="50.0" prefWidth="30.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="19" />
+                  <TextField fx:id="editPar18" alignment="CENTER" editable="false" maxWidth="50.0" prefWidth="30.0" GridPane.columnIndex="1" GridPane.rowIndex="19" />
                </children>
                <opaqueInsets>
                   <Insets />

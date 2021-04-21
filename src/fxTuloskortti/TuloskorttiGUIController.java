@@ -1,19 +1,23 @@
 package fxTuloskortti;
 
 
+import java.awt.Desktop;
+import java.io.IOException;
 import java.io.PrintStream;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import fi.jyu.mit.fxgui.Dialogs;
 import fi.jyu.mit.fxgui.ListChooser;
-import fi.jyu.mit.fxgui.ModalController;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import tuloskortti.RataTieto;
 import tuloskortti.Tuloskortti;
 
 
@@ -29,27 +33,27 @@ public class TuloskorttiGUIController implements Initializable{
     @FXML private TextField hakuehto;
     @FXML private Label labelVirhe;
     @FXML private ScrollPane panelRata;
-    @FXML private ListChooser<String[]> chooserRata;
+    @FXML private ListChooser<RataTieto> chooserRata;
 
-    @FXML private TextField textUusiNimi;
-    @FXML private TextField par1;
-    @FXML private TextField par2;
-    @FXML private TextField par3;
-    @FXML private TextField par4;
-    @FXML private TextField par5;
-    @FXML private TextField par6;
-    @FXML private TextField par7;
-    @FXML private TextField par8;
-    @FXML private TextField par9;
-    @FXML private TextField par10;
-    @FXML private TextField par11;
-    @FXML private TextField par12;
-    @FXML private TextField par13;
-    @FXML private TextField par14;
-    @FXML private TextField par15;
-    @FXML private TextField par16;
-    @FXML private TextField par17;
-    @FXML private TextField par18;
+    @FXML private TextField editNimi;
+    @FXML private TextField editPar1;
+    @FXML private TextField editPar2;
+    @FXML private TextField editPar3;
+    @FXML private TextField editPar4;
+    @FXML private TextField editPar5;
+    @FXML private TextField editPar6;
+    @FXML private TextField editPar7;
+    @FXML private TextField editPar8;
+    @FXML private TextField editPar9;
+    @FXML private TextField editPar10;
+    @FXML private TextField editPar11;
+    @FXML private TextField editPar12;
+    @FXML private TextField editPar13;
+    @FXML private TextField editPar14;
+    @FXML private TextField editPar15;
+    @FXML private TextField editPar16;
+    @FXML private TextField editPar17;
+    @FXML private TextField editPar18;
     
     
     @Override
@@ -58,7 +62,7 @@ public class TuloskorttiGUIController implements Initializable{
         avaa();
     }
     
-    
+    //TODO ei toimi
     @FXML private void handleHakuEhto() {
         String ehto = hakuehto.getText();
         
@@ -87,9 +91,7 @@ public class TuloskorttiGUIController implements Initializable{
      * Käsittelee uuden tuloskortin
      */
     @FXML private void handleUusiTuloskortti() {
-        // uusiTulos();
-        var resurssi = TuloskorttiGUIController.class.getResource("UusiTulosView.fxml");
-        ModalController.showModal(resurssi, "Uusi Tuloskortti",null, "");
+        Dialogs.showMessageDialog("Ei osata");
     }
     
     
@@ -97,11 +99,9 @@ public class TuloskorttiGUIController implements Initializable{
      * Käsittelee uuden radan
      */
     @FXML private void handleUusirata() {
-        Dialogs.showMessageDialog("Ei toimi radan lisäys");
-        var resurssi = TuloskorttiGUIController.class.getResource("UusirataView.fxml");
-        ModalController.showModal(resurssi, "Uusi rata",null, "");
-        //String[] ratatiedot = {"Esimerkki", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18"};
-        //lisaaRata(ratatiedot);
+        RataTieto uRata = new RataTieto();
+        rataKohdalla = uRata;
+        muokkaa();
     }
     
     
@@ -125,8 +125,10 @@ public class TuloskorttiGUIController implements Initializable{
      * Käsittelee radan/tuloksen poistamisen
      */
     @FXML private void handlePoista() {
-        // poista();
-        Dialogs.showMessageDialog("Ei toimi poisto");
+        boolean kumpi; 
+        kumpi = (Dialogs.showQuestionDialog("Poista", "Haluatko varmasti poistaa radan " + chooserRata.getSelectedText(), "Kyllä", "Peruuta"));
+        if (kumpi == true) poista();
+        if (kumpi == false) return;
     }
     
     
@@ -134,10 +136,8 @@ public class TuloskorttiGUIController implements Initializable{
      * Käsittelee radan muokkauksen
      */
     @FXML private void handleMuokkaa() {
-        // uusiRata(@par muokattava);
-        Dialogs.showMessageDialog("Ei toimi");
-        var resurssi = TuloskorttiGUIController.class.getResource("UusirataView.fxml");
-        ModalController.showModal(resurssi, "Uusi rata",null, "");
+        if (rataKohdalla == null) return;
+        muokkaa();
     }
     
     
@@ -145,11 +145,7 @@ public class TuloskorttiGUIController implements Initializable{
      * Avaa suunnitelman tms
      */
     @FXML private void handleAbout() {
-        Dialogs.showMessageDialog("Ei toimi");
-    }
-    
-    @FXML private void handleLisaa() {
-        lisaa();
+        about();
     }
     
     
@@ -157,7 +153,8 @@ public class TuloskorttiGUIController implements Initializable{
 // Tästä eteenpäin ei käyttöliittymään suoraan liittyvää koodia    
 
     private Tuloskortti tuloskortti;
-    private String[] rataKohdalla;
+    private RataTieto rataKohdalla;
+    private TextField[] edits;
     
     /**
      * Tallentaa tiedot
@@ -171,35 +168,6 @@ public class TuloskorttiGUIController implements Initializable{
         //    Dialogs.showMessageDialog("Tallennuksessa ongelmia! " + io.getMessage());
         //    return io.getMessage();
         //} TODO korjaa kun viimestellään
-    }
-    
-    /**
-     *  lisaa radan
-     */
-    protected void lisaa() {
-        
-        String[] uRata = new String[19];
-        uRata[0] = textUusiNimi.getText();
-        uRata[1] = par1.getText();
-        uRata[2] = par2.getText();
-        uRata[3] = par3.getText();
-        uRata[4] = par4.getText();
-        uRata[5] = par5.getText();
-        uRata[6] = par6.getText();
-        uRata[7] = par7.getText();
-        uRata[8] = par8.getText();
-        uRata[9] = par9.getText();
-        uRata[10] = par10.getText();
-        uRata[11] = par11.getText();
-        uRata[12] = par12.getText();
-        uRata[13] = par13.getText();
-        uRata[14] = par14.getText();
-        uRata[15] = par15.getText();
-        uRata[16] = par16.getText();
-        uRata[17] = par17.getText();
-        uRata[18] = par18.getText();
-        
-        lisaaRata(uRata);
     }
     
     
@@ -221,11 +189,17 @@ public class TuloskorttiGUIController implements Initializable{
         
         chooserRata.clear();
         chooserRata.addSelectionListener(e -> naytaRata());
-
+        
+        edits = new TextField[]{editNimi, editPar1, editPar2, editPar3,
+                                editPar4, editPar5, editPar6, 
+                                editPar7, editPar8, editPar9,
+                                editPar10, editPar11, editPar12, 
+                                editPar13, editPar14, editPar15,
+                                editPar16, editPar17, editPar18};
     }
     
-    /** tulostaa radan tiedot
-     * 
+    /** 
+     * näyttää radan tiedot
      */
     protected void naytaRata() {
         
@@ -233,25 +207,7 @@ public class TuloskorttiGUIController implements Initializable{
         
         if (rataKohdalla == null) return;
         
-        textUusiNimi.setText(rataKohdalla[0]);
-        par1.setText(rataKohdalla[1]);
-        par2.setText(rataKohdalla[2]);
-        par3.setText(rataKohdalla[3]);
-        par4.setText(rataKohdalla[4]);
-        par5.setText(rataKohdalla[5]);
-        par6.setText(rataKohdalla[6]);
-        par7.setText(rataKohdalla[7]);
-        par8.setText(rataKohdalla[8]);
-        par9.setText(rataKohdalla[9]);
-        par10.setText(rataKohdalla[10]);
-        par11.setText(rataKohdalla[11]);
-        par12.setText(rataKohdalla[12]);
-        par13.setText(rataKohdalla[13]);
-        par14.setText(rataKohdalla[14]);
-        par15.setText(rataKohdalla[15]);
-        par16.setText(rataKohdalla[16]);
-        par17.setText(rataKohdalla[17]);
-        par18.setText(rataKohdalla[18]);
+        UusiGUIController.naytaRata(edits, rataKohdalla);
     }
     
     
@@ -271,42 +227,55 @@ public class TuloskorttiGUIController implements Initializable{
      */
     public void setTuloskortti(Tuloskortti tuloskortti) {
         this.tuloskortti = tuloskortti;
+        lueTiedosto();
         lataa();
-        naytaRata();
+        //naytaRata();
     }
     
-    /**
-     * lisää uuden radan muokattavaksi
-     * @param ratatiedot tiedot minkä pohjalta uusi rata luodaan
-     */
-    protected void lisaaRata(String[] ratatiedot){
+    
+    private void muokkaa() {
+        RataTieto rata;
+        try {
+            rata = UusiGUIController.kysyRata(null, (RataTieto)rataKohdalla.clone());
+            
+        if (rata == null) return;
+        if(!tuloskortti.korvaaTaiLisaa(rata)) chooserRata.add(rata.getNimi(), rata);
+        UusiGUIController.naytaRata(edits, rata);
+        lataa();
         
-        tuloskortti.lisaaRata(ratatiedot);
-        hae(tuloskortti.annaRataId());
+        } catch (CloneNotSupportedException e) {
+            System.err.print("kloonaus kusi");
+        e.printStackTrace();
+        }
+        
     }
     
     
+    private void poista() {
+        int id = rataKohdalla.getId();
+        tuloskortti.poista(id);
+        lataa();
+        chooserRata.setSelectedIndex(0);
+    }
     
     /**
      * TODO ei toimi
      * hakee kohteen valittavaksi
      * @param hakuid luku jolla haetaan
-     */
+     
     protected void hae(int hakuid) {
         
-        String[] tiedot = new String[19];
+        RataTieto tiedot = new RataTieto();
         int index = 0;
         for(int i = 0; i <= tuloskortti.rataMaara(); i++) {
-            if (tuloskortti.annaRataId() == hakuid) {
+            if (tuloskortti.uusinId() == hakuid) {
                 tiedot = tuloskortti.annaRata(hakuid);
                 index = i;
                 break;
             }
         }
-        chooserRata.add(tiedot[0], tiedot);
-        chooserRata.setSelectedIndex(index);
-        naytaRata();    
     }
+    */
     
     /**
      * @param os virta minne tulostetaan
@@ -323,17 +292,33 @@ public class TuloskorttiGUIController implements Initializable{
      * lataa tiedostojen tiedot esille
      */
     public void lataa() {
-        lueTiedosto();
+        chooserRata.clear();
         int maara = tuloskortti.rataMaara();
         int lisatyt = 0;
         for(int i = 0; lisatyt < maara; i++) {            
-            String[] tiedot = tuloskortti.annaRata(i);
-            if(tiedot[0] == "")continue;
-            chooserRata.add(tiedot[0], tiedot);
+            RataTieto tiedot = tuloskortti.annaRata(i);
+            if(tiedot.getNimi() == null)continue;
+            
+            chooserRata.add(tiedot.getNimi(), tiedot);
             lisatyt++;
         }
     }
-
+    
+    /**
+     * Näytetään ohjelman suunnitelma erillisessä selaimessa.
+     */
+    private void about() {
+        Desktop desktop = Desktop.getDesktop();
+        try {
+            URI uri = new URI("https://tim.jyu.fi/view/kurssit/tie/ohj2/2021k/ht/tahvpwzw");
+            desktop.browse(uri);
+            } catch (URISyntaxException e) {
+                return;
+            } catch (IOException e) {
+                return;
+            }
+        
+    }
 
 
     /**

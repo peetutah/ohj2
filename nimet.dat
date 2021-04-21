@@ -1,8 +1,8 @@
-; Kenttien järjestys tiedostossa on seuraava:
-;rataId |radan nimi
+;Kenttien järjestys tiedostossa on seuraava:
+;rataId | radan nimi
 1|Laajavuori
 2|Meri-Toppila
-4|Toppila(talvi)
 5|uusi
-6|hagu
 7|uutta
+8|tuo
+9|vanha

@@ -75,8 +75,8 @@ public class Tuloskortti {
      * Arrays.toString(ok) === "[, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]";
      * </pre>
      */
-    public String[] annaRata(int id){
-        String[] tulos = rata.kasaaRata(id);
+    public RataTieto annaRata(int id){
+        RataTieto tulos = rata.kasaaRata(id);
         return tulos;
     }
 
@@ -85,17 +85,26 @@ public class Tuloskortti {
      * lisää uuden radan tietoihin, luo sen annettujen tietojen pohjalta
      * @param ratatiedot taulukko minkä pohjalta uusi rata luodaan
      */
-    public void lisaaRata(String[] ratatiedot) {
+    public void lisaaRata(RataTieto ratatiedot) {
         rata.lisaaRata(ratatiedot);        
     }
     
+    
+    /**
+     * korvaa vanhaa ratatietoa, jos ei ole olemass niin lisää
+     * @param uusi uudet tiedot
+     * @return palauttaa korvasiko (true) vai lisäsikö (false)
+     */
+    public boolean korvaaTaiLisaa(RataTieto uusi) {
+        return rata.korvaaTaiLisaa(uusi);
+    }
     
     /** 
      * hakee uusimman radan id:n
      * @return palauttaa viimeisen rekisteröidyn rataid:n
      */
-    public int annaRataId() {
-        return rata.getId();
+    public int uusinId() {
+        return rata.uusinId();
     }
 
     
@@ -112,6 +121,15 @@ public class Tuloskortti {
      */
     public void lueTiedostot() {
         rata.lueTiedostot();
+    }
+    
+
+    /**
+     * poistaa ratatiedot id:n perusteella
+     * @param id poistettavan radan id
+     */
+    public void poista(int id) {
+        rata.poista(id);
     }
     
 // ===================================================================================    
@@ -141,4 +159,6 @@ public class Tuloskortti {
         ok.lisaaPerus();
         ok.annaRata(1);
     }
+
+
 }

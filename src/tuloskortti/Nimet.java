@@ -250,7 +250,15 @@ public class Nimet{
     public boolean getMuutoksia(){
         return this.muutoksia;
     }
-        
+    
+    
+    /**
+     * ilmoittaa uusista muutoksista asettamalla muutoksia = true
+     */
+    public void setMuutoksia() {
+       this.muutoksia = true;
+    }
+    
     
     /** hakee suurimmman id:n alkioista, eli tämän hetken juoksevan id:n
      * @return palauttaa alkioiden suurimman id:n
@@ -346,6 +354,35 @@ public class Nimet{
         return null;
     }
 
+    
+    
+    /**
+     * hakee nimen paikan alkioista id:n perusteella jos ei löydy palauttaa -1
+     * @param id Rataid minkä pohjalta etsitään
+     * @return palauttaa nimen paikan alkioissa, jos ei löydy palauttaa -1
+     * @example
+     * <pre name="test">
+     * Nimet koe = new Nimet();
+     * Nimi n1 = new Nimi(1, "eka");
+     * Nimi n2 = new Nimi(2, "toinen");
+     * Nimi n3 = new Nimi(3, "Kolmas");
+     * koe.lisaa(n1);
+     * koe.lisaa(n3);
+     * koe.lisaa(n2);
+     * koe.etsiPaikka(1) === 0;
+     * koe.etsiPaikka(2) === 2;
+     * koe.etsiPaikka(3) === 1;
+     * koe.etsiPaikka(0) === -1;
+     * </pre>
+     */
+    public int etsiPaikka(int id) {
+        for (int i = 0; i < this.getlkm(); i++) {
+            if( anna(i).getRataId() == id) return i;
+        }
+        return -1;
+    }
+    
+    
 
     /** 
      * tallennusmetodi nimille, tallentaa tiedot jos muutoksia tullut
@@ -398,7 +435,8 @@ public class Nimet{
         
         try (PrintStream ulos = new PrintStream(new FileOutputStream(nTied, true))) {
             ulos.printf(";Kenttien järjestys tiedostossa on seuraava:\n;rataId | radan nimi");
-            for(Nimi n : alkiot) {
+            for(int i = 0; i < getlkm(); i++) {
+                Nimi n = alkiot[i];
                 ulos.printf("\n" + n.toString());
             }
         }    catch (FileNotFoundException e) {
@@ -464,6 +502,43 @@ public class Nimet{
     }
     
     
+
+    /**
+     * poistaa nimitiedon alkioista id:n perusteella, palauttaa 1 jos onnistui, muuten 0
+     * @param id poistettavan id
+     * @return palauttaa 1 jos onnistui, 0 jos tietoja ei ollut 
+     * @example
+     * <pre name="test">
+     * Nimet koe = new Nimet();
+     * Nimi n3 = new Nimi(3, "Kolmas");
+     * Nimi n1 = new Nimi(1, "eka");
+     * Nimi n2 = new Nimi(2, "toinen");
+     * koe.lisaa(n1);
+     * koe.lisaa(n3);
+     * koe.lisaa(n2);
+     * koe.getlkm() === 3;
+     * koe.poista(1) === 1;
+     * koe.poista(1) === 0;
+     * koe.getlkm() === 2;
+     * koe.getMuutoksia() === true;
+     * koe.poista(2) === 1;
+     * koe.getTosiMaara() === 1;
+     * koe.getlkm() === 1;
+     * </pre>
+     */
+    public int poista(int id) {
+        int ind = etsiPaikka(id);
+        if (ind < 0) return 0;
+        this.lkm--;
+        
+        for(int i = ind; i < this.lkm; i++) {
+            this.alkiot[i] =  this.alkiot[i +1];
+        }
+        this.alkiot[this.lkm] = null;
+        setMuutoksia();
+        return 1;
+    }
+    
 // ===================================================================================    
 // testiä ja main
     
@@ -492,5 +567,7 @@ public class Nimet{
         System.out.println(perus.etsiNimi(6).toString());
         System.out.println(perus.etsiNimi(15).toString());
     }
+
+
      
 }
