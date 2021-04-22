@@ -121,8 +121,9 @@ public class RataTieto implements Cloneable{
     public String toString() {
         StringBuilder parTiedot = new StringBuilder();
         for (int i : par) {
-            parTiedot.append(i +",");
+            parTiedot.append(i +", ");
         }
+        parTiedot.delete(parTiedot.length() -2, parTiedot.length());
         return id + "|" + nimi + "|" + parTiedot.toString();
     }
     
@@ -166,15 +167,16 @@ public class RataTieto implements Cloneable{
     
     
     /**
-     * asetttaa tiedon haluttuun kenttään, kentät: 0 = id, 1 = nimi, 2-19 = par 1-18 
+     * asetttaa tiedon haluttuun kenttään, kentät: 0 = nimi, 1-18 = par 1-18 
      * @param k kentä numero
      * @param jono asetettavat tiedot
-     * @return palauttaa null
+     * @return palauttaa null jos onnistui
      */
     public String aseta(int k, String jono) {
         String tjono = jono.trim();
         switch ( k ) {
         case 0 : 
+            if (tjono.length() <= 0) return "Radalla täytyy olla nimi!";
             setNimi(tjono);
             return null;
         case 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18: 

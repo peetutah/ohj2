@@ -1,5 +1,6 @@
 package tuloskortti;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -20,7 +21,7 @@ public class Rata {
     
     
     /**
-     * konstruktori,
+     * konstruktori
      */
     public Rata() {
         this.nimet =new Nimet();
@@ -57,29 +58,31 @@ public class Rata {
 
     
     /** 
-     * lisää uuden radan tietoihin String taulukosta
-     * @param tiedot Taulukko mistä tiedot kerätään, ensimmäisenä oltava radan nimi, jota seuraavat ratojen Par luvut.
+     * lisää uuden radan tietoihin RataTieto oliosta, määrittää id:n annetuista tiedoista riippumatta tietorakenteeseen sopivaksi
+     * @param tiedot olio mistä tiedot kerätään
      * @example
      * <pre name="test">
      * #import java.util.Arrays;
+     * 
      * Rata lisakoe = new Rata(1);
-     * lisakoe.perusRata(); 
-     * String[] em = {"Esimerkki", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18"};
-     * lisakoe.lisaaRata(em);
-     * String[] uusirata = {"Toppila", "3", "3", "3", "3", "3", "3", "3", "3", "3", "4", "3", "3", "3", "3", "3", "3", "3", "3"};
-     * lisakoe.lisaaRata(uusirata);  
-     * String[] uusirata2 = {"Virpiniemi", "3", "3", "4", "5", "4", "3", "3", "3", "3", "4", "3", "3", "3", "6", "3", "3", "3", "3"};
-     * lisakoe.lisaaRata(uusirata2);
-     * lisakoe.annaRataMaara() === 4;
-     * lisakoe.uusinId() === 4
+     * int[] koePar = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18};
+     * RataTieto rata1 = new RataTieto(1, "rata1" , koePar);
+     * int[] koePar2 = {3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3};
+     * RataTieto rata2 = new RataTieto(2, "rata2", koePar2);
+     * int[] koePar3 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 8, 7, 6, 5, 4, 3, 2, 1};
+     * RataTieto rata3 = new RataTieto(1, "rata3", koePar3);
+     * lisakoe.lisaaRata(rata1);
+     * lisakoe.annaRataMaara() === 1;
+     * lisakoe.lisaaRata(rata2);  
+     * lisakoe.lisaaRata(rata3);
+     * lisakoe.annaRataMaara() === 3;
+     * lisakoe.uusinId() === 3;
      * </pre>
      */
     public void lisaaRata(RataTieto tiedot) {
         rekisteroi();
-        
         int id = uusinId();
         String radanNimi = tiedot.getNimi();
-        
         Nimi uusiN = new Nimi(id, radanNimi);
         nimet.lisaa(uusiN);
         
@@ -121,17 +124,7 @@ public class Rata {
      *  Taulukossa ensimmäisenä on radan nimi, jota seuraa ratojen Par luvut. Parin väylä vastaa parluvun paikkaa taulukossa
      *  jos rataa ei löydy palautetaan taulukko jossa ensimmäisenä ""
      * @param id rataid jonka pohjalta rata kasataan
-     * @return palauttaa taulukon jossa ensimmäisenä nimi jota seuraavat parit.
-     * @example
-     * <pre name="test">
-     * #import java.util.Arrays;
-     * Rata kasakoe = new Rata(1);
-     * kasakoe.perusRata();
-     * String[] ok = kasakoe.kasaaRata(1);
-     * Arrays.toString(ok) === "[1, PerusNimi, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3]";
-     * ok = kasakoe.kasaaRata(2);
-     * Arrays.toString(ok) === "[2, , null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]";
-     * </pre>
+     * @return palauttaa taulukon jossa ensimmäisenä nimi jota seuraavat parit
      */
     
     public RataTieto kasaaRata(int id){
@@ -181,6 +174,47 @@ public class Rata {
     public int uusinId() {
         return this.rataId;
     }
+    
+    
+    /**
+     * etsii radat nimien avulla tiedoista hakuehdolla
+     * @param hakuehto merkkijono jota etsitään
+     * @return palauttaa ratojen tiedot listassa
+     * <pre name="test">
+     * #import java.util.*;
+     * 
+     * Rata hakukoe = new Rata(1);
+     * int[] koePar = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18};
+     * RataTieto rata1 = new RataTieto(0, "rata1" , koePar);
+     * int[] koePar2 = {3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3};
+     * RataTieto rata2 = new RataTieto(0, "rata2", koePar2);
+     * int[] koePar3 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 8, 7, 6, 5, 4, 3, 2, 1};
+     * RataTieto rata3 = new RataTieto(0, "rata3", koePar3);
+     * hakukoe.lisaaRata(rata1);
+     * hakukoe.lisaaRata(rata2);
+     * hakukoe.lisaaRata(rata3);
+     * List<RataTieto> hk = hakukoe.etsiRadat("eka");
+     * hk.size() === 0;
+     * hk = hakukoe.etsiRadat("ta");
+     * hk.size() === 3;
+     * hk = hakukoe.etsiRadat("rata3");
+     * hk.size() === 1;
+     * hk.get(0).toString() === "3|rata3|1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 8, 7, 6, 5, 4, 3, 2, 1";
+     * hk = hakukoe.etsiRadat("");
+     * hk.size() === 3;
+     */
+    public List<RataTieto> etsiRadat(String hakuehto) {
+        List<RataTieto> tulokset = new ArrayList<RataTieto>();
+        List<Nimi> loytyneet = nimet.etsiNimia(hakuehto);
+        for(Nimi n : loytyneet) {
+            int id = n.getRataId();
+            RataTieto tulos = new RataTieto();
+            tulos = kasaaRata(id);
+            tulokset.add(tulos);
+        }
+        return tulokset;
+    }
+    
     
     
     /**
@@ -252,7 +286,7 @@ public class Rata {
      */
     public Rata(int testi) {
         juoksevaId = testi;
-        this.nimet =new Nimet();
+        this.nimet = new Nimet();
         this.parit = new Parit();
     }
     

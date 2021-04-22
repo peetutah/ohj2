@@ -1,5 +1,7 @@
 package tuloskortti;
 
+import java.util.List;
+
 /** Pääluokka ohjelmalle
  * @author tahvpwzw
  * @version 21.3.2021
@@ -17,38 +19,16 @@ public class Tuloskortti {
     }
 
     
-    /**
-     * Parsii tekstirivin taulukkoon erotinmerkkien kohdalta, poistaa kaikki ylimääräiset whitespacet
-     * @param jono mikä pätkitään
-     * @return  palauttaa pätkityn merkkijonotaulukon
-     * @example
-     * <pre name="test">
-     * String[] koe = patki("15        | testi ");
-     * koe[0] === "15";
-     * koe[1] === "testi";
-     * String[] koe2 = patki(" 150 \n | \n rivivaihto             ");
-     * koe2[0] === "150";
-     * koe2[1] === "rivivaihto";
-     * String[] koe3 = patki("|");
-     * koe3[0] === "";
-     * koe3[1] === "";
-     * </pre>
-     */
-    public static String[] patki(String jono){ //TODO KORJAA; YHÄ PARMUODOSSA!!
-        String[] valmis = new String[3];
-        String rivi = jono.strip();
-        int a = 0;
-        int b = 0;
-        
-        for (int i = 0; i <= valmis.length; i++){
-            b = rivi.indexOf("|", a);
-            if (b == -1) { valmis[i] = rivi.substring(a).strip(); break; }
-            valmis[i] = rivi.substring(a, b).strip();
-            a = b + 1;
-        }
-        return valmis;
-    }
     
+    
+    /**
+     * etsii radat nimien avulla tiedoista hakuehdolla
+     * @param hakuehto merkkijono jota etsitään
+     * @return palauttaa ratojen tiedot
+     */
+    public List<RataTieto> etsi(String hakuehto) {
+        return rata.etsiRadat(hakuehto);
+    }
     
     
     /** 

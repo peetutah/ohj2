@@ -7,6 +7,7 @@ import java.io.PrintStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import fi.jyu.mit.fxgui.Dialogs;
@@ -62,15 +63,11 @@ public class TuloskorttiGUIController implements Initializable{
         avaa();
     }
     
-    //TODO ei toimi
-    @FXML private void handleHakuEhto() {
+    
+    
+    @FXML private void handleHaku() {
         String ehto = hakuehto.getText();
-        
-        if ( ehto.isEmpty() )
-            naytaVirhe(null);
-        else
-            naytaVirhe("Ei osata vielä hakea "  + ": " + ehto);
-
+        etsi(ehto);
     }
     
     
@@ -125,6 +122,7 @@ public class TuloskorttiGUIController implements Initializable{
      * Käsittelee radan/tuloksen poistamisen
      */
     @FXML private void handlePoista() {
+        if (rataKohdalla == null) return;
         boolean kumpi; 
         kumpi = (Dialogs.showQuestionDialog("Poista", "Haluatko varmasti poistaa radan " + chooserRata.getSelectedText(), "Kyllä", "Peruuta"));
         if (kumpi == true) poista();
@@ -204,9 +202,7 @@ public class TuloskorttiGUIController implements Initializable{
     protected void naytaRata() {
         
         rataKohdalla = chooserRata.getSelectedObject();
-        
-        if (rataKohdalla == null) return;
-        
+                
         UusiGUIController.naytaRata(edits, rataKohdalla);
     }
     
@@ -219,7 +215,7 @@ public class TuloskorttiGUIController implements Initializable{
         }
         labelVirhe.setText(virhe);
         labelVirhe.getStyleClass().add("virhe");
-    }
+    } 
 
     
     /** asettaa ohjelman käyttöliittymään tuloskorttiolion
@@ -242,7 +238,7 @@ public class TuloskorttiGUIController implements Initializable{
         if(!tuloskortti.korvaaTaiLisaa(rata)) chooserRata.add(rata.getNimi(), rata);
         UusiGUIController.naytaRata(edits, rata);
         lataa();
-        
+        chooserRata.setSelectedIndex(tuloskortti.rataMaara() - 1);
         } catch (CloneNotSupportedException e) {
             System.err.print("kloonaus kusi");
         e.printStackTrace();
@@ -255,27 +251,38 @@ public class TuloskorttiGUIController implements Initializable{
         int id = rataKohdalla.getId();
         tuloskortti.poista(id);
         lataa();
+        handleHaku();
         chooserRata.setSelectedIndex(0);
     }
     
+    
     /**
-     * TODO ei toimi
-     * hakee kohteen valittavaksi
-     * @param hakuid luku jolla haetaan
-     
-    protected void hae(int hakuid) {
+     * hakee ratatiedot esitettäväksi
+     * @param haku merkkijono jolla ratoja haetaan
+     */
+    protected void etsi(String haku) {
+        naytaVirhe("");
         
-        RataTieto tiedot = new RataTieto();
-        int index = 0;
-        for(int i = 0; i <= tuloskortti.rataMaara(); i++) {
-            if (tuloskortti.uusinId() == hakuid) {
-                tiedot = tuloskortti.annaRata(hakuid);
-                index = i;
-                break;
-            }
+        if (haku == null || haku.length() <= 0 ) {
+            lataa();
+            return;
         }
+        
+        List<RataTieto> rTiedot = tuloskortti.etsi(haku);
+        chooserRata.clear();
+        
+        if(rTiedot.size() <= 0) {
+            naytaVirhe("Ei hakutuloksia");
+            UusiGUIController.naytaRata(edits, null);
+            return;
+        }
+        
+        for(RataTieto rt : rTiedot) {
+            chooserRata.add(rt.getNimi(), rt);
+        }
+        chooserRata.setSelectedIndex(0);
     }
-    */
+    
     
     /**
      * @param os virta minne tulostetaan
@@ -287,6 +294,7 @@ public class TuloskorttiGUIController implements Initializable{
             os.println("Väylä: "+ i + " Par: " + ratatiedot[i]);
         }
     }
+    
     
     /**
      * lataa tiedostojen tiedot esille
@@ -302,6 +310,7 @@ public class TuloskorttiGUIController implements Initializable{
             chooserRata.add(tiedot.getNimi(), tiedot);
             lisatyt++;
         }
+        rataKohdalla = chooserRata.getSelectedObject();
     }
     
     /**
@@ -330,7 +339,7 @@ public class TuloskorttiGUIController implements Initializable{
     }
     
     /**
-     * lukee tiedot
+     * lukee tiedot tiedostoista
      */
     public void lueTiedosto() {
         tuloskortti.lueTiedostot();

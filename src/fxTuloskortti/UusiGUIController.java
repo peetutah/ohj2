@@ -59,10 +59,12 @@ public class UusiGUIController implements ModalControllerInterface<RataTieto>, I
     }
     
     @FXML private void handleValmis() {
+        pyydaSulkulupa();
         if (!sulkulupa) {
             Dialogs.showMessageDialog(labelVirhe.getText());
             return;
         }
+        rataKohdalla = apurata;
         ModalController.closeStage(labelVirhe);
     }
     
@@ -77,7 +79,8 @@ public class UusiGUIController implements ModalControllerInterface<RataTieto>, I
  // Tästä eteenpäin ei käyttöliittymään suoraan liittyvää koodia    
     
 
-    private RataTieto rataKohdalla;   // = {"1", "Esimerkki", "1","2","3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18"};
+    private RataTieto rataKohdalla;
+    private static RataTieto apurata;
     private TextField edits[];
     private boolean sulkulupa;
 
@@ -89,6 +92,24 @@ public class UusiGUIController implements ModalControllerInterface<RataTieto>, I
     @Override
     public void initialize(URL arg0, ResourceBundle bundle) {
         alusta();
+        sulkulupa = true;
+    }
+    
+    
+    /**
+     * varmistaa ettei ole virheitä
+     */
+    public void pyydaSulkulupa() {
+        String virhe;
+        String kentta;
+        for(int i = 0; i < edits.length; i++) {
+            kentta = edits[i].getText();
+            virhe = apurata.aseta(i, kentta);
+            if (!(virhe == "" || virhe == null)) {
+                naytaVirhe(virhe);
+                return;
+            }
+        }
         sulkulupa = true;
     }
     
@@ -110,7 +131,6 @@ public class UusiGUIController implements ModalControllerInterface<RataTieto>, I
         }
     
     }
-    
 
 
     /**
@@ -129,8 +149,8 @@ public class UusiGUIController implements ModalControllerInterface<RataTieto>, I
      */
     @Override
     public void setDefault(RataTieto oletus) {
-        rataKohdalla = oletus;
-        naytaRata(edits, rataKohdalla);
+        apurata = oletus;
+        naytaRata(edits, apurata);
         
     }
     
@@ -140,7 +160,12 @@ public class UusiGUIController implements ModalControllerInterface<RataTieto>, I
      * @param tiedot  näytettävän radan tiedot
      */
     protected static void naytaRata(TextField[] edits, RataTieto tiedot) {
-        if (tiedot == null) return;
+        if (tiedot == null) {
+            for (int i = 0; i < edits.length; i++) {
+            edits[i].setText("");
+            }
+            return;
+        }
         
         edits[0].setText(tiedot.getNimi());
         for (int i = 1; i < edits.length; i++) {
@@ -168,10 +193,11 @@ public class UusiGUIController implements ModalControllerInterface<RataTieto>, I
     
     private void kasitteleMuutos(int k, TextField edit) {
         
-        if (rataKohdalla == null) return;
+        if (apurata == null) return;
         String s = edit.getText();
-        String virhe = null;
-        virhe = rataKohdalla.aseta(k, s);
+        String virhe = "Radalla täytyy olla nimi!";
+        
+        virhe = apurata.aseta(k, s);
         if ( virhe == null) {
             Dialogs.setToolTipText(edit,"");
             edit.getStyleClass().removeAll("virhe");
@@ -182,7 +208,6 @@ public class UusiGUIController implements ModalControllerInterface<RataTieto>, I
            naytaVirhe(virhe);
        }
        
-      
     }
     
     
@@ -190,7 +215,6 @@ public class UusiGUIController implements ModalControllerInterface<RataTieto>, I
         if (virhe == null || virhe.isEmpty()) {
             labelVirhe.setText("");
             labelVirhe.getStyleClass().removeAll("virhe");
-            sulkulupa = true;
             return;
         }
         sulkulupa = false;

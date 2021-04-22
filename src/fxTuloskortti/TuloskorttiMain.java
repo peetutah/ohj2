@@ -31,8 +31,6 @@ public class TuloskorttiMain extends Application {
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Tuloskortti");
 			
-			//Platform.setImplicitExit(false); //Pitää itse sulkea
-			
 			primaryStage.setOnCloseRequest((event) -> {
 			    //kutsutaan sulkuLupa-metodia
 			    if( !tuloskorttiCtrl.sulkuLupa() ) event.consume();

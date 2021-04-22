@@ -6,6 +6,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -382,6 +384,51 @@ public class Nimet{
         return -1;
     }
     
+    
+    
+    /**
+     * hakee nimet alkioista hakuehdon perusteella
+     * @param hakuehto merkkijono jota etsitään
+     * @return palauttaa listassa nimet jotka vastaavat hakuehtoa
+     * @example
+     * <pre name="test">
+     * #import java.util.*;
+     * 
+     * Nimet koe = new Nimet();
+     * Nimi f = new Nimi(6, "Kuudes");
+     * Nimi c = new Nimi(3, "Kolmas");
+     * Nimi d = new Nimi(4, "Neljäs");
+     * Nimi a = new Nimi(1, "Eka");
+     * Nimi e = new Nimi(5, "Viides");
+     * Nimi b = new Nimi(2, "Toka");
+     * koe.lisaa(b);
+     * koe.lisaa(e);
+     * koe.lisaa(c);
+     * koe.lisaa(d);
+     * koe.lisaa(a);
+     * koe.lisaa(f);
+     * List<Nimi> kt = koe.etsiNimia("eka");
+     * kt.size() === 1;
+     * kt.get(0).toString() === "1|Eka";
+     * kt = koe.etsiNimia("a");
+     * kt.size() === 3;
+     * kt.get(0).toString() === "2|Toka";
+     * kt = koe.etsiNimia("koe");
+     * kt.size() === 0;
+     * </pre>
+     */
+    public List<Nimi> etsiNimia(String hakuehto) {
+        
+        List<Nimi> tulokset = new ArrayList<Nimi>();
+        String ehto = hakuehto.toUpperCase();
+        
+        for(Nimi n : alkiot) {
+            if (n == null) continue;
+            String nm = n.getNimi().toUpperCase(); 
+            if(nm.contains(ehto)) tulokset.add(n);
+        }
+        return tulokset;
+    }
     
 
     /** 
