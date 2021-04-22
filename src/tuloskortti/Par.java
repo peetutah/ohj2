@@ -158,7 +158,6 @@ public class Par{
     /**
      * asettaa paroliolle uuden parluvun
      * @param uusipar uusi parluku oliolle
-     * TODO testit
      */
     public void setPar(int uusipar) {
         this.par = uusipar;

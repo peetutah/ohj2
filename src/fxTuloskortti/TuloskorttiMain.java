@@ -1,7 +1,6 @@
 package fxTuloskortti;
 	
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -40,7 +39,6 @@ public class TuloskorttiMain extends Application {
 	        tuloskorttiCtrl.setTuloskortti(tuloskortti);
 			
 			primaryStage.show();
-			if ( !tuloskorttiCtrl.avaa()) Platform.exit();
 			
 		} catch(Exception e) {
 			e.printStackTrace();

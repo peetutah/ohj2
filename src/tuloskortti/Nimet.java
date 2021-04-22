@@ -69,6 +69,7 @@ public class Nimet{
      * klooni[2].toString() === "2|toinen";
      * klooni[3] === null;
      * klooni.length === 4;
+     * koe.getlkm() === 3;
      * </pre>
      */
     @Override
@@ -111,47 +112,12 @@ public class Nimet{
         muutoksia = true;
     }
     
+    
     /** 
      * getteri nimien lukumäärälle
      * @return palauttaa tämänhetkisten nimien lukumäärän
      * @example
      * <pre name="test">
-     * Nimet koe = new Nimet();
-     * Nimi f = new Nimi(6, "F");
-     * Nimi c = new Nimi(2, "C");
-     * Nimi d = new Nimi(4, "D");
-     * Nimi a = new Nimi(1, "A");
-     * Nimi e = new Nimi(5, "E");
-     * Nimi b = new Nimi(2, "B");
-     * Nimi g = new Nimi(7, "G");
-     * Nimi h = new Nimi(8, "H");
-     * koe.getlkm() === 0;
-     * koe.lisaa(b);
-     * koe.getlkm() === 1;
-     * koe.lisaa(e);
-     * koe.lisaa(c);
-     * koe.getlkm() === 3;
-     * koe.lisaa(d);
-     * koe.lisaa(a);
-     * koe.getlkm() === 5;
-     * koe.lisaa(f);
-     * koe.lisaa(h);
-     * koe.lisaa(g);
-     * koe.getlkm() === 8;
-     * </pre>
-     */
-    public int getlkm() {
-        return this.lkm;
-    }
-    
-    
-    /** 
-     * getteri alkioille
-     * @return palauttaa tämänhetkiset Nimi-alkiot
-     * @example
-     * <pre name="test">
-     * #import java.util.*;
-     * 
      * Nimet koe = new Nimet();
      * Nimi f = new Nimi(6, "F");
      * Nimi c = new Nimi(3, "C");
@@ -161,36 +127,21 @@ public class Nimet{
      * Nimi b = new Nimi(2, "B");
      * Nimi g = new Nimi(7, "G");
      * Nimi h = new Nimi(8, "H");
+     * koe.getlkm() === 0;
      * koe.lisaa(b);
-     * koe.lisaa(e);
-     * koe.lisaa(c);
-     * koe.lisaa(d);
-     * koe.lisaa(a);
-     * koe.lisaa(f);
-     * koe.lisaa(h);
-     * Nimi[] koeAlkiot = koe.getAlkiot();
-     * koeAlkiot.length === 7;
-     * koeAlkiot[0].toString() === "2|B";
-     * koeAlkiot[1].toString() === "5|E";
-     * koeAlkiot[2].toString() === "3|C";
-     * koe.lisaa(g);
-     * koeAlkiot.length === 7;
-     * koeAlkiot.equals(koe.getAlkiot()) === false;
+     * koe.getlkm() === 1;
+     * koe.lisaa(e); koe.lisaa(c);
+     * koe.getlkm() === 3;
+     * koe.lisaa(d); koe.lisaa(a);
+     * koe.getlkm() === 5;
+     * koe.lisaa(f); koe.lisaa(h); koe.lisaa(g);
+     * koe.getlkm() === 8;
+     * koe.poista(1); koe.poista(2); koe.poista(3);
+     * koe.getlkm() === 5;
+     * </pre>
      */
-    public Nimi[] getAlkiot(){
-        return this.alkiot;
-    }
-    
-    /**
-     * @return palauttaa alkioiden varman määrän, huomioi poistetut
-     * TODO testit kuntoon kun poisto löytyy
-     */
-    public int getTosiMaara(){
-        int t = 0;
-        for (Nimi n : alkiot) {
-            if (n != null) t++;
-        }
-        return t;
+    public int getlkm() {
+        return this.lkm;
     }
     
     
@@ -495,7 +446,7 @@ public class Nimet{
     
     /**
      *  lukee tiedoston ja lisää sen tiedot ohjelman käyttöön
-        * @example
+     * @example
      * <pre name="test">
      * #THROWS IOException
      * #import java.io.IOException;
@@ -551,9 +502,8 @@ public class Nimet{
     
 
     /**
-     * poistaa nimitiedon alkioista id:n perusteella, palauttaa 1 jos onnistui, muuten 0
+     * poistaa nimitiedon alkioista id:n perusteella
      * @param id poistettavan id
-     * @return palauttaa 1 jos onnistui, 0 jos tietoja ei ollut 
      * @example
      * <pre name="test">
      * Nimet koe = new Nimet();
@@ -564,18 +514,18 @@ public class Nimet{
      * koe.lisaa(n3);
      * koe.lisaa(n2);
      * koe.getlkm() === 3;
-     * koe.poista(1) === 1;
-     * koe.poista(1) === 0;
+     * koe.poista(1);
+     * koe.getlkm() === 2;
+     * koe.poista(1);
      * koe.getlkm() === 2;
      * koe.getMuutoksia() === true;
-     * koe.poista(2) === 1;
-     * koe.getTosiMaara() === 1;
+     * koe.poista(2);
      * koe.getlkm() === 1;
      * </pre>
      */
-    public int poista(int id) {
+    public void poista(int id) {
         int ind = etsiPaikka(id);
-        if (ind < 0) return 0;
+        if (ind < 0) return;
         this.lkm--;
         
         for(int i = ind; i < this.lkm; i++) {
@@ -583,7 +533,6 @@ public class Nimet{
         }
         this.alkiot[this.lkm] = null;
         setMuutoksia();
-        return 1;
     }
     
 // ===================================================================================    
@@ -591,7 +540,6 @@ public class Nimet{
     
     /** 
      * lisää nimen testejä varten
-     *  TODO poisto ku toimii
      * @param rataId id radalle
      */
     public void perusNimi(int rataId) {
@@ -601,18 +549,19 @@ public class Nimet{
     
     
     /** 
+     * getteri alkioille, testikäyttöön
+     * @return palauttaa tämänhetkiset Nimi-alkiot
+     */
+    public Nimi[] getAlkiot(){
+        return this.alkiot;
+    }
+    
+    /** 
      * testiohojelmaa
      * @param args ei kayt
     */ 
     public static void main (String[] args) {
-        Nimet perus = new Nimet();
-        perus.perusNimi(15);
-        Nimi puolanka = new Nimi(6
-                ,"Puolanka");
-        perus.lisaa(puolanka);
-        
-        System.out.println(perus.etsiNimi(6).toString());
-        System.out.println(perus.etsiNimi(15).toString());
+        //
     }
 
 

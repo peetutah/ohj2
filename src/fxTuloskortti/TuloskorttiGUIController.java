@@ -60,22 +60,21 @@ public class TuloskorttiGUIController implements Initializable{
     @Override
     public void initialize(URL url, ResourceBundle bundle) { 
         alusta();
-        avaa();
     }
     
     
-    
+    /**
+     * käsitteelee haun
+     */
     @FXML private void handleHaku() {
         String ehto = hakuehto.getText();
         etsi(ehto);
     }
     
     
-    @FXML private void handleAvaa() {
-        avaa();
-    }
-    
-    
+    /**
+     * käsittelee uuden tuloskortin/radan luomisen
+     */
     @FXML private void handleUusi(){
         boolean kumpi; 
         kumpi = (Dialogs.showQuestionDialog("Uusi", "Lisätäänkö rata vai tulos?", "Uusi rata", "Uusi tuloskortti"));
@@ -159,13 +158,8 @@ public class TuloskorttiGUIController implements Initializable{
      * @return null jos onnistuu, muuten virhe tekstinä
      */
     private String tallenna() {
-        //try {
             tuloskortti.tallenna();
             return null;
-        //} catch (IOException io){
-        //    Dialogs.showMessageDialog("Tallennuksessa ongelmia! " + io.getMessage());
-        //    return io.getMessage();
-        //} TODO korjaa kun viimestellään
     }
     
     
@@ -197,12 +191,11 @@ public class TuloskorttiGUIController implements Initializable{
     }
     
     /** 
+     * 
      * näyttää radan tiedot
      */
     protected void naytaRata() {
-        
         rataKohdalla = chooserRata.getSelectedObject();
-                
         UusiGUIController.naytaRata(edits, rataKohdalla);
     }
     
@@ -225,10 +218,12 @@ public class TuloskorttiGUIController implements Initializable{
         this.tuloskortti = tuloskortti;
         lueTiedosto();
         lataa();
-        //naytaRata();
     }
     
     
+    /**
+     * käsittelee uuden radan luomisen tai olemassaolevan radan muokkaamisen
+     */
     private void muokkaa() {
         RataTieto rata;
         try {
@@ -247,6 +242,9 @@ public class TuloskorttiGUIController implements Initializable{
     }
     
     
+    /**
+     * poistaa ratatiedot id:n mukaan
+     */
     private void poista() {
         int id = rataKohdalla.getId();
         tuloskortti.poista(id);
@@ -305,13 +303,14 @@ public class TuloskorttiGUIController implements Initializable{
         int lisatyt = 0;
         for(int i = 0; lisatyt < maara; i++) {            
             RataTieto tiedot = tuloskortti.annaRata(i);
-            if(tiedot.getNimi() == null)continue;
+            if(tiedot == null)continue;
             
             chooserRata.add(tiedot.getNimi(), tiedot);
             lisatyt++;
         }
         rataKohdalla = chooserRata.getSelectedObject();
     }
+    
     
     /**
      * Näytetään ohjelman suunnitelma erillisessä selaimessa.
@@ -328,15 +327,7 @@ public class TuloskorttiGUIController implements Initializable{
             }
         
     }
-
-
-    /**
-     * @return palauttaa avausluvan
-     */
-    public boolean avaa() {
-        //TODO method stub
-        return true;
-    }
+    
     
     /**
      * lukee tiedot tiedostoista

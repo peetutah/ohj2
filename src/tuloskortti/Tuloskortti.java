@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class Tuloskortti {
     
-    private Rata rata; //TODO korjaa ku luku toimii
+    private Rata rata;
     
     /**
      * tyhjä konstruktori
@@ -18,8 +18,6 @@ public class Tuloskortti {
        this.rata = new Rata("nimet", "par");
     }
 
-    
-    
     
     /**
      * etsii radat nimien avulla tiedoista hakuehdolla
@@ -44,20 +42,9 @@ public class Tuloskortti {
      * kutsuu rataoliota hakemaan radan id:n phjalta
      * @param id millä haetaan
      * @return id:stä kasattu rata
-     * @example
-     * <pre name="test">
-     * #import java.util.Arrays;
-     * Tuloskortti tkoe = new Tuloskortti(1);
-     * tkoe.lisaaPerus();
-     * String[] ok = tkoe.annaRata(1);
-     * Arrays.toString(ok) === "[PerusNimi, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3]"
-     * ok = tkoe.annaRata(2);
-     * Arrays.toString(ok) === "[, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]";
-     * </pre>
      */
     public RataTieto annaRata(int id){
-        RataTieto tulos = rata.kasaaRata(id);
-        return tulos;
+        return rata.kasaaRata(id);
     }
 
     
@@ -112,33 +99,4 @@ public class Tuloskortti {
         rata.poista(id);
     }
     
-// ===================================================================================    
-// testiä ja main   
-    
-    /**
-     * testitarkoituksiin
-     * @param testi radan juoksevanumero
-     */
-    public Tuloskortti(int testi) {
-       this.rata = new Rata(testi);
-    }
-    
-    
-    /**
-     *  kutsuu rataa lisäämään perusradan // TODO poista
-     */
-    public void lisaaPerus() {
-        rata.perusRata();
-    }
-    
-    /** testis
-     * @param args ei kay
-     */
-    public static void main(String[] args) {
-        Tuloskortti ok = new Tuloskortti();
-        ok.lisaaPerus();
-        ok.annaRata(1);
-    }
-
-
 }

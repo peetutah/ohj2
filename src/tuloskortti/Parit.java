@@ -95,42 +95,7 @@ public class Parit implements Iterable<Par>{
     public int getlkm() {
         return alkiot.size();
     }
-    
-    
-    /** 
-     * getteri alkioille
-     * @return palauttaa viitteen Par-alkioihin
-     * @example
-     * <pre name="test">
-     * #import java.util.*;
-     * 
-     * Parit koe = new Parit();
-     * Par f = new Par(9, 6, 6);
-     * Par c = new Par(9, 3, 3);
-     * Par d = new Par(9, 4, 4);
-     * Par a = new Par(9, 1, 1);
-     * Par e = new Par(9, 5, 5);
-     * Par b = new Par(9, 2, 2);
-     * Par g = new Par(10, 1, 1);
-     * Par h = new Par(10, 2, 2);
-     * koe.lisaa(b);
-     * koe.lisaa(e);
-     * koe.lisaa(c);
-     * koe.lisaa(d);
-     * koe.lisaa(a);
-     * koe.lisaa(f);
-     * koe.lisaa(h);
-     * Collection<Par> koeAlkiot = koe.getAlkiot();
-     * koeAlkiot.size() === 7;
-     * koe.lisaa(g);
-     * koeAlkiot.size() === 8;
-     * koeAlkiot.containsAll(koe.getAlkiot()) === true;
-     * 
-     */
-    public Collection<Par> getAlkiot(){
-        return this.alkiot;
-    }
-    
+        
     
     /** 
      * getteri tiedostonimelle
@@ -427,9 +392,8 @@ public class Parit implements Iterable<Par>{
     
     
     /**
-     * poistaa partiedot alkioista id:n perusteella, palauttaa 1 jos onnistui, muuten 0
+     * poistaa partiedot alkioista id:n perusteella
      * @param id poistettavan id
-     * @return palauttaa 1 jos onnistui, 0 jos tietoja ei ollut
      * @example
      * <pre name="test">
      * #import java.util.*;
@@ -443,37 +407,29 @@ public class Parit implements Iterable<Par>{
      * Par b = new Par(9, 2, 2);
      * Par g = new Par(10, 1, 1);
      * Par h = new Par(10, 2, 2);
-     * koe.lisaa(b);
-     * koe.lisaa(e);
-     * koe.lisaa(c);
-     * koe.lisaa(d);
-     * koe.lisaa(a);
-     * koe.lisaa(f);
-     * koe.lisaa(h);
-     * koe.lisaa(g);
+     * koe.lisaa(b); koe.lisaa(e); koe.lisaa(c); koe.lisaa(d); 
+     * koe.lisaa(a); koe.lisaa(f); koe.lisaa(h); koe.lisaa(g);
      * koe.getlkm() === 8;
-     * koe.poista(1) === 0;
-     * koe.poista(9) === 1;
+     * koe.poista(1);
+     * koe.poista(9);
      * koe.getlkm() === 2;
      * koe.getRadanParluvut(9) === null;
      * Arrays.toString(koe.getRadanParluvut(10)) === "[1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]";
      * </pre>
      */
-    public int poista(int id) {
+    public void poista(int id) {
 
         List<Par> poisto = getRadanPar(id);
-        if (poisto.size() <= 0) return 0;
+        if (poisto.size() <= 0) return;
         
         for(Par p : poisto) {
             alkiot.remove(p);
         }
-        
         setMuutoksia();
-        return 1;
     }
     
 // ===================================================================================    
-// testiä ja main TODO poista kun luokka toimii
+// testiä ja main
     
     /**
      * lisää oletusradan testausta varten
@@ -487,15 +443,20 @@ public class Parit implements Iterable<Par>{
     
     
     /** 
-     * testiohjelmaa
+     * getteri alkioille, testikäyttöön
+     * @return palauttaa viitteen Par-alkioihin
+     */
+    public Collection<Par> getAlkiot(){
+        return this.alkiot;
+    }
+        
+    
+    /** 
+     * testipääohjelma
      * @param args ei kayt
     */
     public static void main(String[] args) {
-        Parit par = new Parit();
-        par.perusParit(15);
-        for(Par p : par.alkiot ) {
-            System.out.println(p.toString());
-        }
+    //
     }
 }
 

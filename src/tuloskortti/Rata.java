@@ -100,6 +100,25 @@ public class Rata {
     /**
      * korvaa vanhoja ratatietoja id:n perusteella
      * @param tiedot uudet tiedot
+     * @example
+     * <pre name="test">
+     * #import java.util.Arrays;
+     * 
+     * Rata kkoe = new Rata(1);
+     * int[] koePar = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18};
+     * RataTieto rata1 = new RataTieto(1, "rata1" , koePar);
+     * int[] koePar2 = {3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3};
+     * RataTieto rata2 = new RataTieto(1, "rata2", koePar2);
+     * int[] koePar3 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 8, 7, 6, 5, 4, 3, 2, 1};
+     * RataTieto rata3 = new RataTieto(1, "rata3", koePar3);
+     * kkoe.lisaaRata(rata1);
+     * kkoe.lisaaRata(rata2);
+     * kkoe.kasaaRata(1).toString() === "1|rata1|1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18";
+     * kkoe.kasaaRata(2).toString() === "2|rata2|3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3";
+     * kkoe.korvaaRata(rata3);
+     * kkoe.kasaaRata(1).toString() === "1|rata3|1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 8, 7, 6, 5, 4, 3, 2, 1";
+     * kkoe.kasaaRata(2).toString() === "2|rata2|3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3";
+     * </pre>
      */
     public void korvaaRata(RataTieto tiedot) {
         
@@ -114,27 +133,45 @@ public class Rata {
              vayla = p.getVayla();
              p.setPar(tiedot.getPar(vayla));
         }
-        
         parit.setMuutoksia();
         nimet.setMuutoksia();
     }
     
+    
     /** 
-     * kasaa radan tiedot String taulukkoon Parit ja Nimet luokista annetun id:n perusteella
-     *  Taulukossa ensimmäisenä on radan nimi, jota seuraa ratojen Par luvut. Parin väylä vastaa parluvun paikkaa taulukossa
-     *  jos rataa ei löydy palautetaan taulukko jossa ensimmäisenä ""
+     * kasaa radan tiedot RataTieto-olioon, jos rataa ei ole tiedoissa palauttaa null
      * @param id rataid jonka pohjalta rata kasataan
-     * @return palauttaa taulukon jossa ensimmäisenä nimi jota seuraavat parit
+     * @return RataTieto-olion jossa tiedot, jos rataa ei löydy palauttaa null.
+     * @example
+     * <pre name="test">
+     * #import java.util.Arrays;
+     * 
+     * Rata kasakoe = new Rata(1);
+     * int[] koePar = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18};
+     * RataTieto rata1 = new RataTieto(1, "rata1" , koePar);
+     * int[] koePar2 = {3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3};
+     * RataTieto rata2 = new RataTieto(2, "rata2", koePar2);
+     * int[] koePar3 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 8, 7, 6, 5, 4, 3, 2, 1};
+     * RataTieto rata3 = new RataTieto(1, "rata3", koePar3);
+     * kasakoe.lisaaRata(rata1);
+     * kasakoe.lisaaRata(rata2);  
+     * kasakoe.lisaaRata(rata3);
+     * kasakoe.kasaaRata(1).toString() === "1|rata1|1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18";
+     * kasakoe.kasaaRata(3).toString() === "3|rata3|1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 8, 7, 6, 5, 4, 3, 2, 1";
+     * kasakoe.kasaaRata(4) === null;
+     * kasakoe.kasaaRata(-1) === null;
+     * </pre> 
      */
     
     public RataTieto kasaaRata(int id){
         
         RataTieto valmis = new RataTieto();
-        valmis.setId(id);
         
-        if(nimet.etsiNimi(id) == null) { return valmis; };
-        
+        if(nimet.etsiNimi(id) == null) { return null; };
+
         Nimi rataN = nimet.etsiNimi(id);
+        
+        valmis.setId(id);
         valmis.setNimi(rataN.getNimi());
         valmis.setParit(parit.getRadanParluvut(id));
         
@@ -154,7 +191,7 @@ public class Rata {
      * </pre>
      */
     public int annaRataMaara(){
-         return nimet.getTosiMaara();
+         return nimet.getlkm();
     }
     
     
@@ -241,6 +278,25 @@ public class Rata {
      * korvaa tai lisää ratatietoja, riippuen onko tietoja jo olemassa
      * @param tiedot uudet tiedot
      * @return palauttaa korvasiko (true) vai lisäsikö (false)
+     * @example
+     * <pre name="test">
+     * #import java.util.Arrays;
+     * 
+     * Rata koe = new Rata(1);
+     * int[] koePar = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18};
+     * RataTieto rata1 = new RataTieto(1, "rata1" , koePar);
+     * int[] koePar2 = {3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3};
+     * RataTieto rata2 = new RataTieto(2, "rata2", koePar2);
+     * int[] koePar3 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 8, 7, 6, 5, 4, 3, 2, 1};
+     * RataTieto rata3 = new RataTieto(1, "rata3", koePar3);
+     * koe.korvaaTaiLisaa(rata1) === false;
+     * koe.korvaaTaiLisaa(rata2) === false;
+     * koe.annaRataMaara() === 2;
+     * koe.kasaaRata(1).toString() === "1|rata1|1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18";
+     * koe.kasaaRata(2).toString() === "2|rata2|3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3";
+     * koe.korvaaTaiLisaa(rata3) === true;
+     * koe.annaRataMaara() === 2;
+     * koe.kasaaRata(1).toString() === "1|rata3|1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 8, 7, 6, 5, 4, 3, 2, 1";
      */
     public boolean korvaaTaiLisaa(RataTieto tiedot) {
         int id = tiedot.getId(); 
@@ -258,12 +314,10 @@ public class Rata {
     /**
      * poistaa radan tiedot nimistä ja pareista
      * @param id poistettavan radan id
-     * @return palauttaa 1 jos toinen onnistui, 2 jos molemmat, 0 jos epäonnistui
      */
-    public int poista(int id) {
-        int n = nimet.poista(id);
-        int p = parit.poista(id);
-        return n + p;
+    public void poista(int id) {
+        nimet.poista(id);
+        parit.poista(id);
     }
     
     
@@ -272,7 +326,7 @@ public class Rata {
     
     
     /**
-     * lisää perusradan, id = 15, nimi = Perus, par =  3 x 18
+     * lisää perusradan, testeihin
      */
     public void perusRata() {
         rekisteroi();
@@ -290,24 +344,13 @@ public class Rata {
         this.parit = new Parit();
     }
     
+    
     /** 
      * testipääohjelmaa
      * @param args ei kayt
      */
     public static void main(String[] args) {
-        /*
-        Rata testirata = new Rata();
-        
-        testirata.perusRata();
-        
-        String[] uusirata = {"Toppila", "3", "3", "3", "3", "3", "3", "3", "3", "3", "4", "3", "3", "3", "3", "3", "3", "3", "3"};
-        testirata.lisaaRata(uusirata);
-        
-        String[] uusirata2 = {"Virpiniemi", "3", "3", "4", "5", "4", "3", "3", "3", "3", "4", "3", "3", "3", "6", "3", "3", "3", "3"};
-        testirata.lisaaRata(uusirata2);
-        
-        testirata.kasaaRata(1);
-        */
+        //
     }
 
 }
