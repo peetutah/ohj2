@@ -49,21 +49,6 @@
         <menus>
           <Menu mnemonicParsing="false" text="Tiedosto">
             <items>
-                  <MenuItem mnemonicParsing="false" onAction="#handleUusi" text="Uusi...">
-                     <accelerator>
-                        <KeyCodeCombination alt="UP" code="U" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-                     </accelerator>
-                  </MenuItem>
-                  <MenuItem mnemonicParsing="false" onAction="#handleUusiTuloskortti" text="Uusi tuloskortti">
-                     <accelerator>
-                        <KeyCodeCombination alt="UP" code="T" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-                     </accelerator>
-                  </MenuItem>
-                  <MenuItem mnemonicParsing="false" onAction="#handleUusirata" text="Uusi rata">
-                     <accelerator>
-                        <KeyCodeCombination alt="UP" code="R" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-                     </accelerator>
-                  </MenuItem>
                   <MenuItem mnemonicParsing="false" onAction="#handleTallenna" text="Tallenna">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
@@ -78,6 +63,21 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Muokkaa">
             <items>
+                  <MenuItem mnemonicParsing="false" onAction="#handleUusi" text="Uusi...">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="U" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator>
+                  </MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#handleUusirata" text="Uusi rata">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="R" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator>
+                  </MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#handleUusiTuloskortti" text="Uusi tuloskortti">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="T" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator>
+                  </MenuItem>
                   <MenuItem mnemonicParsing="false" onAction="#handleMuokkaa" text="Muokkaa">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="E" control="DOWN" meta="UP" shift="UP" shortcut="UP" />

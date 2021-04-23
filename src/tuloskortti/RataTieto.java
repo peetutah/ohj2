@@ -104,18 +104,22 @@ public class RataTieto implements Cloneable{
     }
     
     
-    
-    /**
-     * palauttaa radan tietokenttien lukumäärän: 1 id, 2 nimi, 3-20 parit 
-     * @return palauttaa 20
-     */
-    public int getKenttia() {
-        return 20;
-    }
-    
-    
     /**
      * muuntaa radan tiedot merkkijonoksi muotoa: id|nimi|par1,par2,par3,par4...par18
+     * @example
+     * <pre name="test">
+     * int[] koePar = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18};
+     * RataTieto rata1 = new RataTieto(1, "rata1" , koePar);
+     * int[] koePar2 = {3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3};
+     * RataTieto rata2 = new RataTieto(2, "rata2", koePar2);
+     * int[] koePar3 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 8, 7, 6, 5, 4, 3, 2, 1};
+     * RataTieto rata3 = new RataTieto(1, "rata3", koePar3);
+     * RataTieto rata4 = new RataTieto();
+     * rata1.toString() === "1|rata1|1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18";
+     * rata2.toString() === "2|rata2|3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3";
+     * rata3.toString() === "1|rata3|1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 8, 7, 6, 5, 4, 3, 2, 1";
+     * rata4.toString() === "0|null|0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0";
+     * </pre>
      */
     @Override
     public String toString() {
@@ -128,13 +132,24 @@ public class RataTieto implements Cloneable{
     }
     
     /**
-     * kloonaa ratatiedot, palauttaa kloonin
+     * kloonaa ratatiedot, palauttaa kloonin. HUOM jos nimi = null se muutetaan tyhjäksi merkkijonoksi
+     * @example
+     * <pre name="test">
+     * #THROWS CloneNotSupportedException
+     * 
+     * int[] koePar = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18};
+     * RataTieto rata1 = new RataTieto(1, "rata1" , koePar);
+     * rata1.toString() === "1|rata1|1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18";
+     * RataTieto rata2 = (RataTieto)rata1.clone();
+     * rata2.toString() === "1|rata1|1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18";
+     * rata1.setNimi("Muutettu"); 
+     * rata1.toString() === "1|Muutettu|1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18"; 
+     * rata2.toString() === "1|rata1|1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18";
+     * </pre>
      */
     @Override
     public Object clone() throws CloneNotSupportedException {
         
-        if (this.equals(null)) System.err.println("tyhjää kloonaat");
-       
         RataTieto klooni = (RataTieto)super.clone();
         
         if (this.nimi == null) this.setNimi("");
@@ -151,26 +166,25 @@ public class RataTieto implements Cloneable{
         return klooni;
     }
     
-    /**
-     * antaa halutun kentä tiedot, kentät: 0 = id, 1 = nimi, 2-19 = par 1-18 
-     * @param k halutun kentän numero
-     * @return palauttaa kentän sisällön merkkijonona
-     */
-    public String anna(int k) {
-        switch (k) {
-        case 0 : return "" + getId();
-        case 1 : return getNimi();
-        case 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19: return "" + getPar(k - 1);
-        default : return "antaminen epäonnistui";
-        }
-    }
-    
     
     /**
-     * asetttaa tiedon haluttuun kenttään, kentät: 0 = nimi, 1-18 = par 1-18 
-     * @param k kentä numero
+     * asettaa tiedon haluttuun kenttään, kentät: 0 = nimi, 1-18 = par 1-18, palauttaa virhetekstin tai null jos ei virheitä
+     * @param k kentän numero
      * @param jono asetettavat tiedot
-     * @return palauttaa null jos onnistui
+     * @return palauttaa null jos onnistui, muuten virhetekstin
+     * @example
+     * <pre name="test">
+     * #THROWS NumberFormatException
+     * 
+     * int[] koePar = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18};
+     * RataTieto rata1 = new RataTieto(1, "rata1" , koePar);
+     * rata1.aseta(0, "Ensimmäinen") === null;
+     * rata1.aseta(18, "100") === null;
+     * rata1.aseta(0, "") === "Radalla täytyy olla nimi!";
+     * rata1.aseta(2, "a") === "Par voi olla vain numero!";
+     * rata1.aseta(20, "4") === "Asetus epäonnistui";
+     * rata1.toString() === "1|Ensimmäinen|1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 100"; 
+     * </pre>
      */
     public String aseta(int k, String jono) {
         String tjono = jono.trim();
