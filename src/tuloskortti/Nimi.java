@@ -2,6 +2,7 @@ package tuloskortti;
 
 /** 
  * luokka yhtä radan nimeä varten
+ * tahvpwzw@jyu.student.fi
  * @author tahvpwzw
  * @version 21.3.2021
  *

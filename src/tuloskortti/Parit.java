@@ -9,7 +9,8 @@ import java.io.PrintStream;
 import java.util.*;
 
 /**
- * luokka parien hallinnoimiseen
+ * luokka partietojen hallinnoimiseen, vastaa tiedoston luvusta ja kirjoittamisesta sekä uusien parien lisäämisestä sekä poistamisesta
+ * tahvpwzw@jyu.student.fi
  * @author tahvpwzw
  * @version 21.3.2021
  *

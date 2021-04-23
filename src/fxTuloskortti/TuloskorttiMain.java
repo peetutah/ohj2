@@ -10,7 +10,7 @@ import tuloskortti.Tuloskortti;
 
 /**
  * Pääohjelma tuloskorttiohjelman käynnistämiseen
- * 
+ * tahvpwzw@jyu.student.fi
  * @author tahvpwzw
  * @version 13.1.2021
  *

@@ -3,7 +3,7 @@ package tuloskortti;
 /**
  * @author tahvpwzw
  * @version 20.4.2021
- *  luokka ratatietojen siirtoa varten
+ *  luokka ratatietojen siirtoa varten, käyttöliittymässä tapauhtuva muokkaus toteutetaan täällä
  */
 public class RataTieto implements Cloneable{
 

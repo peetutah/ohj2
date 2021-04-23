@@ -2,10 +2,12 @@ package tuloskortti;
 
 import java.util.List;
 
-/** Pääluokka ohjelmalle
+/** 
+ * Pääluokka ohjelmalle
+ * tahvpwzw@jyu.student.fi
  * @author tahvpwzw
  * @version 21.3.2021
- *
+ * TODO koko tulospuoli puuttuu vielä 
  */
 public class Tuloskortti {
     
@@ -58,7 +60,7 @@ public class Tuloskortti {
     
     
     /**
-     * korvaa vanhaa ratatietoa, jos ei ole olemass niin lisää
+     * korvaa vanhaa ratatietoa, jos tietoa ei ole olemassa valmiiksi niin lisää sen
      * @param uusi uudet tiedot
      * @return palauttaa korvasiko (true) vai lisäsikö (false)
      */

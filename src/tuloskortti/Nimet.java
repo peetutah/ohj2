@@ -10,8 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-/**
- * luokka nimien hallinnoimiseen
+/** 
+ * luokka nimitietojen hallinnoimiseen, vastaa tiedoston luvusta ja kirjoittamisesta sekä uusien nimien lisäämisestä sekä poistamisesta
+ * tahvpwzw@jyu.student.fi
  * @author tahvpwzw
  * @version 21.3.2021
  *

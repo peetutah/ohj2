@@ -5,6 +5,8 @@ import java.util.List;
 
 
 /**
+ * Rataluokka käsittelee ratojen tietoja attribuuteillaan. Siirto tämän ja pääluokan välillä tapahtuu pääosin RataTieto-luokalla. Vanhojen tietojen korvaaminen tapahtuu täällä
+ * tahvpwzw@jyu.student.fi
  * @author tahvpwzw
  * @version 21.3.2021
  *
@@ -162,7 +164,6 @@ public class Rata {
      * kasakoe.kasaaRata(-1) === null;
      * </pre> 
      */
-    
     public RataTieto kasaaRata(int id){
         
         RataTieto valmis = new RataTieto();

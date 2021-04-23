@@ -24,9 +24,10 @@ import tuloskortti.Tuloskortti;
 
 /**
  * Luokka käyttöliittymän käsittelyille
+ * tahvpwzw@jyu.student.fi
  * @author tahvpwzw
  * @version 13.1.2021
- * 
+ * TODO tallenustarvetta ei vielä varmisteta ennen sulkemista
  */
 
 public class TuloskorttiGUIController implements Initializable{    
@@ -165,7 +166,6 @@ public class TuloskorttiGUIController implements Initializable{
     
     /**
      * Tarkistetaan onko tallennettu 
-     * TODO lisätä varmistus tallennustarpeelle
      * @return true jos saa sulkea sovelluksen, false jos ei
      */
     public boolean sulkuLupa() {

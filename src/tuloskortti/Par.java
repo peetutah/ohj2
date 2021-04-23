@@ -2,6 +2,7 @@ package tuloskortti;
 
 /**
  * luokka yksittäistä paria varten
+ * tahvpwzw@jyu.student.fi
  * @author tahvpwzw
  * @version 21.3.2021
  */

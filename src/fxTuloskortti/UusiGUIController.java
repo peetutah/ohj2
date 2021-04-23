@@ -16,9 +16,10 @@ import fi.jyu.mit.fxgui.ModalControllerInterface;
 
 /**
  * Kontrolleri lisäämiselle ja muokkaukselle
+ * tahvpwzw@jyu.student.fi
  * @author tahvpwzw
  * @version 17.2.2021
- *
+ * TODO tulospuoli kokonaan
  */
 public class UusiGUIController implements ModalControllerInterface<RataTieto>, Initializable{
     
@@ -45,19 +46,23 @@ public class UusiGUIController implements ModalControllerInterface<RataTieto>, I
     @FXML private TextField editPar17;
     @FXML private TextField editPar18;
     
-    
+    /**
+     * käsittelee plussauksen tulokseen
+     */
     @FXML private void handlePlus() {
         Dialogs.showMessageDialog("ei toimi +");
     }
-      
+    
+    /**
+     * käsittelee miiinuksen tulokseen
+     */
     @FXML private void handleMiinus() {
         Dialogs.showMessageDialog("ei toimi -");
     }
     
-    @FXML private void handleVayla() {
-        Dialogs.showMessageDialog("ei voi vielä lisätä");
-    }
-    
+    /**
+     * käsittelee valmiin radan, ei sulje jos virheitä
+     */
     @FXML private void handleValmis() {
         pyydaSulkulupa();
         if (!sulkulupa) {
@@ -68,6 +73,9 @@ public class UusiGUIController implements ModalControllerInterface<RataTieto>, I
         ModalController.closeStage(labelVirhe);
     }
     
+    /**
+     * käsittelee peruutuksen, jättää huomiotta mahdolliset muutokset
+     */
     @FXML private void handlePeruuta() {
         rataKohdalla = null;
         ModalController.closeStage(labelVirhe);
@@ -89,6 +97,7 @@ public class UusiGUIController implements ModalControllerInterface<RataTieto>, I
         editNimi.requestFocus();
     }
     
+    
     @Override
     public void initialize(URL arg0, ResourceBundle bundle) {
         alusta();
@@ -97,7 +106,7 @@ public class UusiGUIController implements ModalControllerInterface<RataTieto>, I
     
     
     /**
-     * varmistaa ettei ole virheitä
+     * Varmistaa ettei ole virheitä, antaa luvan sulkea jos ei. Muuten asettaa virhetekstin
      */
     public void pyydaSulkulupa() {
         String virhe;
@@ -190,7 +199,11 @@ public class UusiGUIController implements ModalControllerInterface<RataTieto>, I
                
     }
     
-    
+    /**
+     * käsittelee muokkauksessa tapahtuvat muutokset. Asettaa virhekenttään tekstin jos tieto on vääräntyyppistä
+     * @param k monettako kenttää muokataan 1 -> nimi, 2-19 -> par1-18
+     * @param edit editoitava tekstikenttä
+     */
     private void kasitteleMuutos(int k, TextField edit) {
         
         if (apurata == null) return;
@@ -210,7 +223,10 @@ public class UusiGUIController implements ModalControllerInterface<RataTieto>, I
        
     }
     
-    
+    /**
+     * näyttää virheen käyttöliittymässä
+     * @param virhe näytettävä virhe
+     */
     private void naytaVirhe(String virhe) {
         if (virhe == null || virhe.isEmpty()) {
             labelVirhe.setText("");
@@ -222,7 +238,9 @@ public class UusiGUIController implements ModalControllerInterface<RataTieto>, I
         labelVirhe.getStyleClass().add("virhe");
     }
      
-    
+    /**
+     * palauttaa muutokset suljettaessa
+     */
     @Override
     public RataTieto getResult() {
         return rataKohdalla;
