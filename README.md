@@ -1,7 +1,6 @@
-# pohja
+# Kurssin ohjelmointi 2-harjoitustyö
 
-Pohja kevään 2021 harjoitustöiden GIT-repoille
+Suunnitelma ja tarkempi dokumentaatio löytyy TIM-sivulta:
+<https://tim.jyu.fi/view/kurssit/tie/ohj2/2021k/ht/tahvpwzw>
 
-Lue käyttöohjeet TIMistä: <https://tim.jyu.fi/view/kurssit/tie/ohj2/tyokalut/git/ohj2git#fork>
-
-TIM-sivu: <https://tim.jyu.fi/view/kurssit/tie/ohj2/2021k/ht/tahvpwzw>
+Siirretty suoraan yliopiston gitistä, author siis luonnollisesti opiston tunnus.
